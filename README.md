@@ -1,1 +1,1 @@
-# UEPlugin-Shortcut-Asset
+# UEPlugin-ShortcutAsset
