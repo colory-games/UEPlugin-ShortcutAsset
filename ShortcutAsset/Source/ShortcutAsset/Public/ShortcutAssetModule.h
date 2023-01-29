@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Modules/ModuleManager.h"
+#include "IAssetTypeActions.h"
 
-#define LOCTEXT_NAMESPACE "FSamplePluginModule"
 
-class FSamplePluginModule : public IModuleInterface
+class FShortcutAssetModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 	virtual bool SupportsDynamicReloading() override;
+private:
+	TArray<TSharedRef<IAssetTypeActions>> RegisteredAssetTypeActions;
 };
-
-#undef LOCTEXT_NAMESPACE
