@@ -2,7 +2,7 @@
 
 #include "ShortcutAssetSubsystem.h"
 
-void UShortcutAssetEditor::Initialize(const TArray<TObjectPtr<UObject>>& InObjects)
+void UShortcutAssetEditor::Initialize(const TArray<UObject*>& InObjects)
 {
 	UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 

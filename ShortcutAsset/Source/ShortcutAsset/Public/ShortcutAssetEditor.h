@@ -10,7 +10,7 @@ class SHORTCUTASSET_API UShortcutAssetEditor : public UAssetEditor
 	GENERATED_BODY()
 
 public:
-	void Initialize(const TArray<TObjectPtr<UObject>>& InObjects);
+	void Initialize(const TArray<UObject*>& InObjects);
 
 	IAssetEditorInstance* GetInstanceInterface();
 
