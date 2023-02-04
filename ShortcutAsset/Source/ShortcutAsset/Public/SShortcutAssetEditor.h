@@ -9,7 +9,7 @@
 
 class SShortcutAssetEditor : public SCompoundWidget
 {
-	TObjectPtr<UShortcutAsset> ShortcutAsset;
+	UShortcutAsset* ShortcutAsset;
 
 	TSharedPtr<IDetailsView> PropertiesView;
 
@@ -21,7 +21,7 @@ public:
 
 	virtual ~SShortcutAssetEditor();
 
-	void Construct(const FArguments& InArgs, TObjectPtr<UShortcutAsset> InShortcutAsset);
+	void Construct(const FArguments& InArgs, UShortcutAsset* InShortcutAsset);
 };
 
 class FShortcutAssetPropertiesLayout : public IDetailCustomNodeBuilder

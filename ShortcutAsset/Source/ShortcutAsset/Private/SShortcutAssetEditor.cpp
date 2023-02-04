@@ -9,7 +9,7 @@ SShortcutAssetEditor::~SShortcutAssetEditor()
 	FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);
 }
 
-void SShortcutAssetEditor::Construct(const FArguments& InArgs, TObjectPtr<UShortcutAsset> InShortcutAsset)
+void SShortcutAssetEditor::Construct(const FArguments& InArgs, UShortcutAsset* InShortcutAsset)
 {
 	ShortcutAsset = InShortcutAsset;
 

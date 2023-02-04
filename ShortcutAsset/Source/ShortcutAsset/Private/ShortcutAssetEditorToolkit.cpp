@@ -18,8 +18,8 @@ TSharedRef<SDockTab> FShortcutAssetEditorToolkit::HandleTabManagerSpawnTab(const
 	if (TabIdentifier == TabID)
 	{
 		UShortcutAssetEditor* Editor = CastChecked<UShortcutAssetEditor>(OwningAssetEditor);
-		TArray<TObjectPtr<UObject>> ShortcutAssets = Editor->ObjectsToEdit;
-		TObjectPtr<UShortcutAsset> SA = CastChecked<UShortcutAsset>(ShortcutAssets[0]);
+		TArray<UObject*> ShortcutAssets = Editor->ObjectsToEdit;
+		UShortcutAsset* SA = CastChecked<UShortcutAsset>(ShortcutAssets[0]);
 
 		TabWidget = SNew(SShortcutAssetEditor, SA);
 	}
@@ -58,7 +58,7 @@ FShortcutAssetEditorToolkit::~FShortcutAssetEditorToolkit()
 	UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 	if (Subsystem)
 	{
-		TArray<TObjectPtr<UObject>> ObjectsToEdit;
+		TArray<UObject*> ObjectsToEdit;
 		OwningAssetEditor->GetObjectsToEdit(ObjectsToEdit);
 		Subsystem->NotifyShortcutAssetEditorClosed(ObjectsToEdit);
 	}

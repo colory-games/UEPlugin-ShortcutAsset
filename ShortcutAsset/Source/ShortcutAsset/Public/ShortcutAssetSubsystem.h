@@ -15,10 +15,10 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
-	void OpenShortcutAssetEditor(TArray<TObjectPtr<UObject>> ObjectsToEdit);
-	void NotifyShortcutAssetEditorClosed(TArray<TObjectPtr<UObject>> ObjectsAreEditing);
+	void OpenShortcutAssetEditor(TArray<UObject*> ObjectsToEdit);
+	void NotifyShortcutAssetEditorClosed(TArray<UObject*> ObjectsAreEditing);
 
-	TMap<TObjectPtr<UObject>, TObjectPtr<UShortcutAssetEditor>> OpenedEditorInstances;
+	TMap<UObject*, UShortcutAssetEditor*> OpenedEditorInstances;
 
 	TSharedPtr<IToolkitHost> ToolKitHostRef;
 };

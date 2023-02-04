@@ -41,7 +41,7 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 		FUIAction(
 			FExecuteAction::CreateLambda([=]
 			{
-				TArray<TObjectPtr<UObject>> Objects = { InObjects[0] };
+				TArray<UObject*> Objects = {InObjects[0]};
 				UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 				Subsystem->OpenShortcutAssetEditor(Objects);
 			}),

@@ -18,5 +18,5 @@ public:
 	virtual TSharedPtr<FBaseAssetToolkit> CreateToolkit() override;
 
 	UPROPERTY()
-	TArray<TObjectPtr<UObject>> ObjectsToEdit;
+	TArray<UObject*> ObjectsToEdit;
 };
