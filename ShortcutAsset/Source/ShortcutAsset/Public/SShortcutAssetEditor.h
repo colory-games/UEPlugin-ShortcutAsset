@@ -31,6 +31,9 @@ class FShortcutAssetPropertiesLayout : public IDetailCustomNodeBuilder
 public:
 	FShortcutAssetPropertiesLayout(TWeakObjectPtr<UShortcutAsset> InShortcutAsset);
 
+	virtual void SetOnRebuildChildren(FSimpleDelegate InOnRegenerateChildren) override
+	{
+	}
 	virtual void GenerateChildContent(IDetailChildrenBuilder& ChildrenBuilder) override;
 	virtual void GenerateHeaderRowContent(FDetailWidgetRow& NodeRow) override
 	{
