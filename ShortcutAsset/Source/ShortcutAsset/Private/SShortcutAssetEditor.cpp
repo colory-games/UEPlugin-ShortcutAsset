@@ -2,6 +2,7 @@
 
 #include "SShortcutAssetEditor.h"
 
+#include "DetailCategoryBuilder.h"
 #include "DetailLayoutBuilder.h"
 
 SShortcutAssetEditor::~SShortcutAssetEditor()
