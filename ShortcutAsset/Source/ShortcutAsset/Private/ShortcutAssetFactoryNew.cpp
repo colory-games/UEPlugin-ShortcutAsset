@@ -9,7 +9,8 @@ UShortcutAssetFactoryNew::UShortcutAssetFactoryNew(const FObjectInitializer& Obj
 	bEditAfterNew = true;
 }
 
-UObject* UShortcutAssetFactoryNew::FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
+UObject* UShortcutAssetFactoryNew::FactoryCreateNew(
+	UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
 {
 	return NewObject<UShortcutAsset>(InParent, InClass, InName, Flags);
 }

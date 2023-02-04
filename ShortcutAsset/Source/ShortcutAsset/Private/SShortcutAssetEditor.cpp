@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SShortcutAssetEditor.h"
+
 #include "DetailLayoutBuilder.h"
 
 
@@ -15,15 +16,15 @@ void SShortcutAssetEditor::Construct(const FArguments& InArgs, TObjectPtr<UShort
 
 	FPropertyEditorModule& EditModule = FModuleManager::Get().GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
 
-	FOnGetDetailCustomizationInstance OnGetPropertiesViewCustomizationInstance = FOnGetDetailCustomizationInstance::CreateStatic(
-		&FShortcutAssetPropertiesDetailCustomization::MakeInstance
-	);
+	FOnGetDetailCustomizationInstance OnGetPropertiesViewCustomizationInstance =
+		FOnGetDetailCustomizationInstance::CreateStatic(&FShortcutAssetPropertiesDetailCustomization::MakeInstance);
 	FDetailsViewArgs OnGetPropertiesViewCustomizationInstanceArgs(
 		false, false, false, FDetailsViewArgs::HideNameArea, true, nullptr, false, FName("UShortcutAsset"));
 	PropertiesView = EditModule.CreateDetailView(OnGetPropertiesViewCustomizationInstanceArgs);
 	PropertiesView->RegisterInstancedCustomPropertyLayout(UObject::StaticClass(), OnGetPropertiesViewCustomizationInstance);
 	PropertiesView->SetObject(ShortcutAsset);
 
+	// clang-format off
 	ChildSlot
 	[
 		SNew(SSplitter)
@@ -36,10 +37,11 @@ void SShortcutAssetEditor::Construct(const FArguments& InArgs, TObjectPtr<UShort
 			]
 		]
 	];
+	// clang-format on
 }
 
-FShortcutAssetPropertiesLayout::FShortcutAssetPropertiesLayout(TWeakObjectPtr<UShortcutAsset> InShortcutAsset) :
-	ShortcutAsset(InShortcutAsset)
+FShortcutAssetPropertiesLayout::FShortcutAssetPropertiesLayout(TWeakObjectPtr<UShortcutAsset> InShortcutAsset)
+	: ShortcutAsset(InShortcutAsset)
 {
 }
 
@@ -63,8 +65,9 @@ FName FShortcutAssetPropertiesLayout::GetName() const
 
 void FShortcutAssetPropertiesDetailCustomization::CustomizeDetails(IDetailLayoutBuilder& DetailLayout)
 {
-	IDetailCategoryBuilder& ShortcutAssetCategory = DetailLayout.EditCategory("ShortcutAsset", FText::FromString("Property"), ECategoryPriority::Important);
-	const TArray <TWeakObjectPtr<UObject>> Objects = DetailLayout.GetDetailsView()->GetSelectedObjects();
+	IDetailCategoryBuilder& ShortcutAssetCategory =
+		DetailLayout.EditCategory("ShortcutAsset", FText::FromString("Property"), ECategoryPriority::Important);
+	const TArray<TWeakObjectPtr<UObject>> Objects = DetailLayout.GetDetailsView()->GetSelectedObjects();
 	check(Objects.Num() == 1);
 
 	if (Objects.Num() == 1)

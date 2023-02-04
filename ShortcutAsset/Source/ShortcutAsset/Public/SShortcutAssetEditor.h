@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Widgets/SCompoundWidget.h"
-#include "ShortcutAsset.h"
-#include "IDetailCustomization.h"
-#include "IDetailCustomNodeBuilder.h"
-#include "IDetailChildrenBuilder.h"
 #include "DetailWidgetRow.h"
+#include "IDetailChildrenBuilder.h"
+#include "IDetailCustomNodeBuilder.h"
+#include "IDetailCustomization.h"
+#include "ShortcutAsset.h"
+#include "Widgets/SCompoundWidget.h"
 
 class SShortcutAssetEditor : public SCompoundWidget
 {
@@ -14,7 +14,10 @@ class SShortcutAssetEditor : public SCompoundWidget
 	TSharedPtr<IDetailsView> PropertiesView;
 
 public:
-	SLATE_BEGIN_ARGS(SShortcutAssetEditor) { }
+	SLATE_BEGIN_ARGS(SShortcutAssetEditor)
+	{
+
+	}
 	SLATE_END_ARGS()
 
 	virtual ~SShortcutAssetEditor();
@@ -27,15 +30,22 @@ class FShortcutAssetPropertiesLayout : public IDetailCustomNodeBuilder
 	TWeakObjectPtr<UShortcutAsset> ShortcutAsset;
 
 public:
-
 	FShortcutAssetPropertiesLayout(TWeakObjectPtr<UShortcutAsset> InShortcutAsset);
 
 	virtual void GenerateChildContent(IDetailChildrenBuilder& ChildrenBuilder) override;
 	virtual void GenerateHeaderRowContent(FDetailWidgetRow& NodeRow) override {}
-	virtual void Tick(float DeltaTime) override {}
-	virtual bool RequiresTick() const override { return false; }
+	virtual void Tick(float DeltaTime) override
+	{
+	}
+	virtual bool RequiresTick() const override
+	{
+		return false;
+	}
 	virtual FName GetName() const override;
-	virtual bool InitiallyCollapsed() const override { return false; }
+	virtual bool InitiallyCollapsed() const override
+	{
+		return false;
+	}
 };
 
 class FShortcutAssetPropertiesDetailCustomization : public IDetailCustomization

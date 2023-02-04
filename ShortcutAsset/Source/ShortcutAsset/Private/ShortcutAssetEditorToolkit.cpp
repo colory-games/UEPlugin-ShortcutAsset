@@ -1,9 +1,9 @@
 #include "ShortcutAssetEditorToolkit.h"
 
-#include "EditorReimportHandler.h"
-#include "ShortcutAssetSubsystem.h"
 #include "EditorModeManager.h"
+#include "EditorReimportHandler.h"
 #include "SShortcutAssetEditor.h"
+#include "ShortcutAssetSubsystem.h"
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
@@ -23,15 +23,18 @@ TSharedRef<SDockTab> FShortcutAssetEditorToolkit::HandleTabManagerSpawnTab(const
 		TabWidget = SNew(SShortcutAssetEditor, SA);
 	}
 
+	// clang-format off
 	return SNew(SDockTab)
 		.TabRole(ETabRole::PanelTab)
 		[
 			TabWidget.ToSharedRef()
 		];
+	// clang-format on
 }
 
 FShortcutAssetEditorToolkit::FShortcutAssetEditorToolkit(UAssetEditor* InOwningAssetEditor) : FBaseAssetToolkit(InOwningAssetEditor)
 {
+	// clang-format off
 	StandaloneDefaultLayout = FTabManager::NewLayout("Standalone_ShortcutAssetEditor")
 		->AddArea(
 			FTabManager::NewPrimaryArea()
@@ -43,6 +46,7 @@ FShortcutAssetEditorToolkit::FShortcutAssetEditorToolkit(UAssetEditor* InOwningA
 				->SetSizeCoefficient(1.0f)
 			)
 		);
+	// clang-format on
 }
 
 FShortcutAssetEditorToolkit::~FShortcutAssetEditorToolkit()
@@ -86,16 +90,17 @@ FString FShortcutAssetEditorToolkit::GetDocumentationLink() const
 
 void FShortcutAssetEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
-	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(
-		LOCTEXT("WorkspaceMenu_ShortcutAssetEditor", "Shortcut Asset Editor")
-	);
+	WorkspaceMenuCategory =
+		InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_ShortcutAssetEditor", "Shortcut Asset Editor"));
 
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
 
+	// clang-format off
 	InTabManager->RegisterTabSpawner(TabID, FOnSpawnTab::CreateSP(this, &FShortcutAssetEditorToolkit::HandleTabManagerSpawnTab, TabID))
 		.SetDisplayName(LOCTEXT("ShortcutAssetEditorTabName", "Shortcut Asset Editor"))
 		.SetGroup(WorkspaceMenuCategory.ToSharedRef())
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
+	// clang-format on
 }
 
 void FShortcutAssetEditorToolkit::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)

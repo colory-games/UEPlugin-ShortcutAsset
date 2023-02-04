@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Tools/BaseAssetToolkit.h"
 #include "ShortcutAsset.h"
+#include "Tools/BaseAssetToolkit.h"
 
 class FShortcutAssetEditorToolkit : public FBaseAssetToolkit
 {
@@ -14,7 +14,10 @@ public:
 
 	virtual ~FShortcutAssetEditorToolkit();
 
-	virtual bool IsPrimaryEditor() const override { return false; }
+	virtual bool IsPrimaryEditor() const override
+	{
+		return false;
+	}
 
 	virtual FName GetToolkitFName() const override;
 

@@ -4,31 +4,31 @@ using UnrealBuildTool;
 
 public class ShortcutAsset : ModuleRules
 {
-    public ShortcutAsset(ReadOnlyTargetRules Target) : base(Target)
-    {
-        PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+	public ShortcutAsset(ReadOnlyTargetRules Target) : base(Target)
+	{
+		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(
-            new string[]
-            {
-                "Core",
-                "CoreUObject",
-                "Engine",
-                "UnrealEd",
-            }
-        );
+		PublicDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"Core",
+				"CoreUObject",
+				"Engine",
+				"UnrealEd",
+			}
+		);
 
-        PrivateDependencyModuleNames.AddRange(
-            new string[]
-            {
-                "AssetRegistry",
-                "EditorStyle",
-                "EditorSubsystem",
-                "SlateCore",
-                "Slate",
-                "PropertyEditor",
-                "ContentBrowser",
-            }
-        );
-    }
+		PrivateDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"AssetRegistry",
+				"EditorStyle",
+				"EditorSubsystem",
+				"SlateCore",
+				"Slate",
+				"PropertyEditor",
+				"ContentBrowser",
+			}
+		);
+	}
 }

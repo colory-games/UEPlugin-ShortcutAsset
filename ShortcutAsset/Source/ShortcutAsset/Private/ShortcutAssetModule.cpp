@@ -2,7 +2,6 @@
 
 #include "ShortcutAssetActions.h"
 
-
 void FShortcutAssetModule::StartupModule()
 {
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();

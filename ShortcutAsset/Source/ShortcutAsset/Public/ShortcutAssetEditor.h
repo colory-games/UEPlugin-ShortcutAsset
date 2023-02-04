@@ -4,7 +4,6 @@
 
 #include "ShortcutAssetEditor.generated.h"
 
-
 UCLASS()
 class SHORTCUTASSET_API UShortcutAssetEditor : public UAssetEditor
 {

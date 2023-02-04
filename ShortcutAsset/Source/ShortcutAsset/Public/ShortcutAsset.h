@@ -20,7 +20,6 @@ class SHORTCUTASSET_API UShortcutAsset : public UObject
 	GENERATED_BODY()
 
 public:
-
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	EShortcutAssetLinkType LinkType;
 

@@ -13,7 +13,6 @@ class SHORTCUTASSET_API UShortcutAssetSubsystem : public UEditorSubsystem
 	GENERATED_BODY()
 
 public:
-
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
