@@ -8,19 +8,14 @@ public class ShortcutAsset : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(
-			new string[]
-			{
+		PublicDependencyModuleNames.AddRange(new string[]{
 				"Core",
 				"CoreUObject",
 				"Engine",
 				"UnrealEd",
-			}
-		);
+		});
 
-		PrivateDependencyModuleNames.AddRange(
-			new string[]
-			{
+		PrivateDependencyModuleNames.AddRange(new string[]{
 				"AssetRegistry",
 				"EditorStyle",
 				"EditorSubsystem",
@@ -28,7 +23,6 @@ public class ShortcutAsset : ModuleRules
 				"Slate",
 				"PropertyEditor",
 				"ContentBrowser",
-			}
-		);
+		});
 	}
 }
