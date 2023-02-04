@@ -2,6 +2,7 @@
 
 #include "EditorModeManager.h"
 #include "EditorReimportHandler.h"
+#include "EditorStyleSet.h"
 #include "SShortcutAssetEditor.h"
 #include "ShortcutAssetSubsystem.h"
 
