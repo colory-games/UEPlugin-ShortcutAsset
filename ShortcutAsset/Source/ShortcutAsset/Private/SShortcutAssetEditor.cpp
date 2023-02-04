@@ -4,7 +4,6 @@
 
 #include "DetailLayoutBuilder.h"
 
-
 SShortcutAssetEditor::~SShortcutAssetEditor()
 {
 	FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);

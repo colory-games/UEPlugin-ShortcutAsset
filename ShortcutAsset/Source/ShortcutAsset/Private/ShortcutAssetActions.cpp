@@ -80,7 +80,8 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 						LinkedPath = "/Game" + LinkedPath.RightChop(DISPLAY_NAME_FOR_GAME_FOLDER.Len());
 					}
 
-					FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>(FName("AssetRegistry"));
+					FAssetRegistryModule& AssetRegistryModule =
+						FModuleManager::LoadModuleChecked<FAssetRegistryModule>(FName("AssetRegistry"));
 					FARFilter Filter;
 					TArray<FAssetData> AssetData;
 					FString DirectoryPath;
@@ -112,9 +113,11 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					}
 
 					// TODO: Use UEditorUtilityLibrary::SyncBrowserToFolders for UE 5.1.
-					//       When implementing this, remove #include "ContentBrowserModule.h" and #include "IContentBrowserSingleton.h"
-					//       from this file, and "ContentBrowser" module from ShortcutAsset.Build.cs.
-					FContentBrowserModule& ContentBrowserModule = FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+					//       When implementing this, remove #include "ContentBrowserModule.h" and
+					//       #include "IContentBrowserSingleton.h" from this file, and "ContentBrowser"
+					//       module from ShortcutAsset.Build.cs.
+					FContentBrowserModule& ContentBrowserModule =
+						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
 					ContentBrowserModule.Get().SyncBrowserToFolders({ LinkedPath }, false, true);
 					break;
 				}

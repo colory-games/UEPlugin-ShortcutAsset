@@ -9,20 +9,20 @@ public class ShortcutAsset : ModuleRules
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[]{
-				"Core",
-				"CoreUObject",
-				"Engine",
-				"UnrealEd",
+			"Core",
+			"CoreUObject",
+			"Engine",
+			"UnrealEd",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]{
-				"AssetRegistry",
-				"EditorStyle",
-				"EditorSubsystem",
-				"SlateCore",
-				"Slate",
-				"PropertyEditor",
-				"ContentBrowser",
+			"AssetRegistry",
+			"EditorStyle",
+			"EditorSubsystem",
+			"SlateCore",
+			"Slate",
+			"PropertyEditor",
+			"ContentBrowser",
 		});
 	}
 }

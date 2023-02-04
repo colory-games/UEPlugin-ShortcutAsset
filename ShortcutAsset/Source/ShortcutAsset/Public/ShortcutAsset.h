@@ -20,15 +20,15 @@ class SHORTCUTASSET_API UShortcutAsset : public UObject
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property")
 	EShortcutAssetLinkType LinkType;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, meta = (EditCondition = "LinkType == EShortcutAssetLinkType::Asset"))
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property", meta = (EditCondition = "LinkType == EShortcutAssetLinkType::Asset"))
 	TObjectPtr<UObject> LinkedAsset;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::SoftAsset"))
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property", meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::SoftAsset"))
 	FSoftObjectPath LinkedAssetPath;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::Directory"))
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property", meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::Directory"))
 	FDirectoryPath LinkedDirectoryPath;
 };

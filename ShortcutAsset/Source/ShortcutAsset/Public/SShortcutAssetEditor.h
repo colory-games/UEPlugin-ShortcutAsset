@@ -16,7 +16,6 @@ class SShortcutAssetEditor : public SCompoundWidget
 public:
 	SLATE_BEGIN_ARGS(SShortcutAssetEditor)
 	{
-
 	}
 	SLATE_END_ARGS()
 
@@ -33,7 +32,9 @@ public:
 	FShortcutAssetPropertiesLayout(TWeakObjectPtr<UShortcutAsset> InShortcutAsset);
 
 	virtual void GenerateChildContent(IDetailChildrenBuilder& ChildrenBuilder) override;
-	virtual void GenerateHeaderRowContent(FDetailWidgetRow& NodeRow) override {}
+	virtual void GenerateHeaderRowContent(FDetailWidgetRow& NodeRow) override
+	{
+	}
 	virtual void Tick(float DeltaTime) override
 	{
 	}

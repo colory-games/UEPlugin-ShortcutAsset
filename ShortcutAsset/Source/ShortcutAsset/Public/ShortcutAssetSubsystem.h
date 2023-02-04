@@ -1,9 +1,8 @@
 #pragma once
 
 #include "EditorSubsystem.h"
-
-#include "ShortcutAssetEditorToolkit.h"
 #include "ShortcutAssetEditor.h"
+#include "ShortcutAssetEditorToolkit.h"
 
 #include "ShortcutAssetSubsystem.generated.h"
 
