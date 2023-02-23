@@ -71,7 +71,7 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					}
 					break;
 				}
-				case EShortcutAssetLinkType::SoftAsset:
+				case EShortcutAssetLinkType::AssetPath:
 				{
 					FString LinkedPath = ShortcutAsset->LinkedAssetPath.GetAssetPathString();
 					const FString DISPLAY_NAME_FOR_GAME_FOLDER = "/Content";
@@ -103,7 +103,7 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 
 					break;
 				}
-				case EShortcutAssetLinkType::Directory:
+				case EShortcutAssetLinkType::DirectoryPath:
 				{
 					FString LinkedPath = ShortcutAsset->LinkedDirectoryPath.Path;
 					const FString DISPLAY_NAME_FOR_GAME_FOLDER = "/Content";
