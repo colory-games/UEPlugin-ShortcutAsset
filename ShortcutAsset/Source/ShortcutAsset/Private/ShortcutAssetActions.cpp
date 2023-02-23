@@ -61,6 +61,7 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 		auto ShortcutAsset = Cast<UShortcutAsset>(*It);
 		if (ShortcutAsset != nullptr)
 		{
+			bool bOpenShortcutEditor = false;
 			switch (ShortcutAsset->LinkType)
 			{
 				case EShortcutAssetLinkType::Asset:
@@ -68,6 +69,10 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					if (ShortcutAsset->LinkedAsset != nullptr)
 					{
 						GEditor->EditObject(ShortcutAsset->LinkedAsset);
+					}
+					else
+					{
+						bOpenShortcutEditor = true;
 					}
 					break;
 				}
@@ -85,6 +90,7 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					FARFilter Filter;
 					TArray<FAssetData> AssetData;
 					FString DirectoryPath;
+					bool bSuccess = false;
 					if (LinkedPath.Split(TEXT("/"), &DirectoryPath, nullptr, ESearchCase::CaseSensitive, ESearchDir::FromEnd))
 					{
 						Filter.PackagePaths.Add(*DirectoryPath);
@@ -96,10 +102,12 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 							{
 								UObject* Asset = Data.GetAsset();
 								GEditor->EditObject(Asset);
+								bSuccess = true;
 								break;
 							}
 						}
 					}
+					bOpenShortcutEditor = !bSuccess;
 
 					break;
 				}
@@ -119,7 +127,27 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					FContentBrowserModule& ContentBrowserModule =
 						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
 					ContentBrowserModule.Get().SyncBrowserToFolders({LinkedPath}, false, false);
+
+					// Check if the current path is changed.
+					FContentBrowserItemPath CurrentPath = ContentBrowserModule.Get().GetCurrentPath();
+					if (CurrentPath.GetInternalPathName().ToString() != LinkedPath)
+					{
+						bOpenShortcutEditor = true;
+					}
 					break;
+				}
+			} // switch
+
+			if (bOpenShortcutEditor)
+			{
+				FString Message = FString::Format(TEXT("The link stored in '{0}' is missing.\nDo you want to edit the link?"),
+					{ ShortcutAsset->GetName() });
+				FText TitleText = LOCTEXT("Title", "Missing Link Error");
+				FText MessageText = FText::AsCultureInvariant(Message);
+				if (FMessageDialog::Open(EAppMsgType::OkCancel, MessageText, &TitleText) == EAppReturnType::Ok)
+				{
+					UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
+					Subsystem->OpenShortcutAssetEditor({ ShortcutAsset });
 				}
 			}
 		}

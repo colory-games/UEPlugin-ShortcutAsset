@@ -23,6 +23,7 @@ public class ShortcutAsset : ModuleRules
 			"Slate",
 			"PropertyEditor",
 			"ContentBrowser",
+			"ContentBrowserData",
 		});
 
 		// @remove-start FULL_VERSION=true
