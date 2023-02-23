@@ -24,5 +24,9 @@ public class ShortcutAsset : ModuleRules
 			"PropertyEditor",
 			"ContentBrowser",
 		});
+
+		// @remove-start FULL_VERSION=true
+		PublicDefinitions.Add("SA_FREE_VERSION");
+		// @remove-end
 	}
 }
