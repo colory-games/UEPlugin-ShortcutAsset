@@ -118,7 +118,7 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					//       module from ShortcutAsset.Build.cs.
 					FContentBrowserModule& ContentBrowserModule =
 						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
-					ContentBrowserModule.Get().SyncBrowserToFolders({LinkedPath}, false, true);
+					ContentBrowserModule.Get().SyncBrowserToFolders({LinkedPath}, false, false);
 					break;
 				}
 			}
