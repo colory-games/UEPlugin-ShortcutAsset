@@ -71,7 +71,7 @@ FName FShortcutAssetEditorToolkit::GetToolkitFName() const
 
 FText FShortcutAssetEditorToolkit::GetBaseToolkitName() const
 {
-	return LOCTEXT("AppLevel", "Shortcut Asset Editor");
+	return LOCTEXT("AppLevel", "Shortcut Editor");
 }
 
 FLinearColor FShortcutAssetEditorToolkit::GetWorldCentricTabColorScale() const
@@ -81,7 +81,7 @@ FLinearColor FShortcutAssetEditorToolkit::GetWorldCentricTabColorScale() const
 
 FString FShortcutAssetEditorToolkit::GetWorldCentricTabPrefix() const
 {
-	return LOCTEXT("WorldCentricTabPrefix", "Shortcut Asset ").ToString();
+	return LOCTEXT("WorldCentricTabPrefix", "Shortcut ").ToString();
 }
 
 FString FShortcutAssetEditorToolkit::GetDocumentationLink() const
@@ -98,7 +98,7 @@ void FShortcutAssetEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManag
 
 	// clang-format off
 	InTabManager->RegisterTabSpawner(TabID, FOnSpawnTab::CreateSP(this, &FShortcutAssetEditorToolkit::HandleTabManagerSpawnTab, TabID))
-		.SetDisplayName(LOCTEXT("ShortcutAssetEditorTabName", "Shortcut Asset Editor"))
+		.SetDisplayName(LOCTEXT("ShortcutAssetEditorTabName", "Shortcut Editor"))
 		.SetGroup(WorkspaceMenuCategory.ToSharedRef())
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
 	// clang-format on

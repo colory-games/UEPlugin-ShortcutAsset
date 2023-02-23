@@ -133,7 +133,7 @@ uint32 FShortcutAssetActions::GetCategories()
 
 FText FShortcutAssetActions::GetName() const
 {
-	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_ShortcutAsset", "ShortcutAsset");
+	return LOCTEXT("AssetTypeActions_Shortcut", "Shortcut");
 }
 
 UClass* FShortcutAssetActions::GetSupportedClass() const

@@ -43,4 +43,9 @@ bool UShortcutAssetFactoryNew::ShouldShowInNewMenu() const
 	return true;
 }
 
+FString UShortcutAssetFactoryNew::GetDefaultNewAssetName() const
+{
+	return "NewShortcut";
+}
+
 #undef LOCTEXT_NAMESPACE
