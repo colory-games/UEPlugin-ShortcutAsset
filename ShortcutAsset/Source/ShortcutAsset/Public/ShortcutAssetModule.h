@@ -12,4 +12,11 @@ public:
 
 private:
 	TArray<TSharedRef<IAssetTypeActions>> RegisteredAssetTypeActions;
+	TArray<TSharedRef<FSlateStyleSet>> RegisteredSlateStyleSets;
+
+	void RegisterActions();
+	void UnregisterActions();
+
+	void RegisterStyles();
+	void UnregisterStyles();
 };
