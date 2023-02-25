@@ -14,7 +14,6 @@ void FShortcutAssetModule::StartupModule()
 void FShortcutAssetModule::ShutdownModule()
 {
 	FAssetToolsModule* AssetToolsModule = FModuleManager::GetModulePtr<FAssetToolsModule>("AssetToools");
-
 	if (AssetToolsModule != nullptr)
 	{
 		IAssetTools& AssetTools = AssetToolsModule->Get();

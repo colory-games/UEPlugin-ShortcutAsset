@@ -92,13 +92,13 @@ FString FShortcutAssetEditorToolkit::GetDocumentationLink() const
 void FShortcutAssetEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
 	WorkspaceMenuCategory =
-		InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_ShortcutAssetEditor", "Shortcut Asset Editor"));
+		InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_ShortcutEditor", "Shortcut Editor"));
 
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
 
 	// clang-format off
 	InTabManager->RegisterTabSpawner(TabID, FOnSpawnTab::CreateSP(this, &FShortcutAssetEditorToolkit::HandleTabManagerSpawnTab, TabID))
-		.SetDisplayName(LOCTEXT("ShortcutAssetEditorTabName", "Shortcut Editor"))
+		.SetDisplayName(LOCTEXT("ShortcutEditorTabName", "Shortcut Editor"))
 		.SetGroup(WorkspaceMenuCategory.ToSharedRef())
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
 	// clang-format on

@@ -2,8 +2,7 @@
 
 #include "SShortcutAssetEditor.h"
 
-#include "DetailCategoryBuilder.h"
-#include "DetailLayoutBuilder.h"
+#include "PropertyCustomizationHelpers.h"
 
 SShortcutAssetEditor::~SShortcutAssetEditor()
 {
@@ -14,14 +13,17 @@ void SShortcutAssetEditor::Construct(const FArguments& InArgs, UShortcutAsset* I
 {
 	ShortcutAsset = InShortcutAsset;
 
-	FPropertyEditorModule& EditModule = FModuleManager::Get().GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
+	FPropertyEditorModule& PropertyEditorModule = FModuleManager::Get().GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
 
-	FOnGetDetailCustomizationInstance OnGetPropertiesViewCustomizationInstance =
-		FOnGetDetailCustomizationInstance::CreateStatic(&FShortcutAssetPropertiesDetailCustomization::MakeInstance);
-	FDetailsViewArgs OnGetPropertiesViewCustomizationInstanceArgs(
-		false, false, false, FDetailsViewArgs::HideNameArea, true, nullptr, false, FName("UShortcutAsset"));
-	PropertiesView = EditModule.CreateDetailView(OnGetPropertiesViewCustomizationInstanceArgs);
-	PropertiesView->RegisterInstancedCustomPropertyLayout(UObject::StaticClass(), OnGetPropertiesViewCustomizationInstance);
+	FDetailsViewArgs ViewArgs;
+	ViewArgs.bAllowSearch = false;
+	ViewArgs.NameAreaSettings = FDetailsViewArgs::HideNameArea;
+	ViewArgs.bHideSelectionTip = true;
+	PropertiesView = PropertyEditorModule.CreateDetailView(ViewArgs);
+	PropertiesView->RegisterInstancedCustomPropertyTypeLayout(FName("SoftObjectPath"),
+		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FShortcutAssetPropertyTypeCustomization::MakeInstance));
+	PropertiesView->RegisterInstancedCustomPropertyTypeLayout(FName("Object"),
+		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FShortcutAssetPropertyTypeCustomization::MakeInstance));
 	PropertiesView->SetObject(ShortcutAsset);
 
 	// clang-format off
@@ -40,40 +42,68 @@ void SShortcutAssetEditor::Construct(const FArguments& InArgs, UShortcutAsset* I
 	// clang-format on
 }
 
-FShortcutAssetPropertiesLayout::FShortcutAssetPropertiesLayout(TWeakObjectPtr<UShortcutAsset> InShortcutAsset)
-	: ShortcutAsset(InShortcutAsset)
+FShortcutAssetPropertyTypeCustomization::FShortcutAssetPropertyTypeCustomization()
 {
 }
 
-void FShortcutAssetPropertiesLayout::GenerateChildContent(IDetailChildrenBuilder& ChildrenBuilder)
+bool FShortcutAssetPropertyTypeCustomization::IsSoftObjectPathProperty(const FProperty* Property) const
 {
-	if (!ShortcutAsset.IsValid())
-	{
-		return;
-	}
+	const FStructProperty* StructProperty = CastField<const FStructProperty>(Property);
+
+	return StructProperty && StructProperty->Struct == TBaseStructure<FSoftObjectPath>::Get();
 }
 
-FName FShortcutAssetPropertiesLayout::GetName() const
+bool FShortcutAssetPropertyTypeCustomization::IsObjectProperty(const FProperty* Property) const
 {
-	if (ShortcutAsset.IsValid())
-	{
-		return ShortcutAsset->GetFName();
-	}
+	const FObjectProperty* ObjectProperty = CastField<const FObjectProperty>(Property);
 
-	return NAME_None;
+	return ObjectProperty && ObjectProperty->PropertyClass == UObject::StaticClass();
 }
 
-void FShortcutAssetPropertiesDetailCustomization::CustomizeDetails(IDetailLayoutBuilder& DetailLayout)
+void FShortcutAssetPropertyTypeCustomization::CustomizeHeader(
+	TSharedRef<IPropertyHandle> PropertyHandle, FDetailWidgetRow& HeaderRow, IPropertyTypeCustomizationUtils& CustomizationUtils)
 {
-	IDetailCategoryBuilder& ShortcutAssetCategory =
-		DetailLayout.EditCategory("ShortcutAsset", FText::FromString("Property"), ECategoryPriority::Important);
-	const TArray<TWeakObjectPtr<UObject>> Objects = DetailLayout.GetDetailsView()->GetSelectedObjects();
-	check(Objects.Num() == 1);
+	FProperty* Property = PropertyHandle->GetProperty();
 
-	if (Objects.Num() == 1)
+	FAssetData Data;
+	PropertyHandle->GetValue(Data);
+
+	FOnShouldFilterAsset OnShouldFilterAssetFunc;
+	if (IsSoftObjectPathProperty(Property))
 	{
-		ShortcutAsset = CastChecked<UShortcutAsset>(Objects[0].Get());
-		PropertyLayout = MakeShareable(new FShortcutAssetPropertiesLayout(ShortcutAsset));
-		ShortcutAssetCategory.AddCustomBuilder(PropertyLayout.ToSharedRef());
+		OnShouldFilterAssetFunc = FOnShouldFilterAsset::CreateLambda([](const FAssetData& Data) -> bool {
+			return Data.GetClass() == UShortcutAsset::StaticClass();
+		});
 	}
+	else if (IsObjectProperty(Property))
+	{
+		OnShouldFilterAssetFunc = FOnShouldFilterAsset::CreateLambda([](const FAssetData& Data) -> bool {
+			return Data.GetClass() == UShortcutAsset::StaticClass() || Data.GetClass() == UWorld::StaticClass();
+		});
+	}
+	else
+	{
+		check(0);
+	}
+
+	HeaderRow
+		.NameContent()
+		[
+			PropertyHandle->CreatePropertyNameWidget()
+		]
+		.ValueContent()
+		[
+			SNew(SObjectPropertyEntryBox)
+			.DisplayCompactSize(true)
+			.DisplayThumbnail(true)
+			.AllowClear(true)
+			.ThumbnailPool(CustomizationUtils.GetThumbnailPool())
+			.OnShouldFilterAsset(OnShouldFilterAssetFunc)
+			.PropertyHandle(PropertyHandle)
+		];
+}
+
+void FShortcutAssetPropertyTypeCustomization::CustomizeChildren(
+	TSharedRef<IPropertyHandle> PropertyHandle, IDetailChildrenBuilder& Builder, IPropertyTypeCustomizationUtils& CustomizationUtils)
+{
 }
