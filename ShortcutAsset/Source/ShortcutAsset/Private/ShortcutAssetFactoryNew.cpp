@@ -35,7 +35,7 @@ UObject* UShortcutAssetFactoryNew::FactoryCreateNew(
 		}
 		return nullptr;
 	}
-#endif   // SA_FREE_VERSION
+#endif	  // SA_FREE_VERSION
 
 	return NewObject<UShortcutAsset>(InParent, InClass, InName, Flags);
 }

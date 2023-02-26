@@ -71,8 +71,8 @@ void FShortcutAssetModule::RegisterStyles()
 		new FSlateImageBrush(NewStyle->RootToContentDir(TEXT("Resources/AssetIcons/ShortcutAssetThumbnail_64"), TEXT(".png")),
 			FVector2D(64.0f, 64.0f)));
 	NewStyle->Set("ClassIcon.ShortcutAsset",
-		new FSlateImageBrush(NewStyle->RootToContentDir(TEXT("Resources/AssetIcons/ShortcutAssetIcon_16"), TEXT(".png")),
-			FVector2D(16.0f, 16.0f)));
+		new FSlateImageBrush(
+			NewStyle->RootToContentDir(TEXT("Resources/AssetIcons/ShortcutAssetIcon_16"), TEXT(".png")), FVector2D(16.0f, 16.0f)));
 
 	FSlateStyleRegistry::RegisterSlateStyle(*NewStyle);
 	RegisteredSlateStyleSets.Add(NewStyle);
