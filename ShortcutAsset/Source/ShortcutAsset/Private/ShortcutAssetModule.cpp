@@ -1,7 +1,6 @@
 #include "ShortcutAssetModule.h"
 
 #include "ShortcutAssetActions.h"
-#include "Styling/SlateStyle.h"
 #include "Styling/SlateStyleRegistry.h"
 
 void FShortcutAssetModule::StartupModule()
