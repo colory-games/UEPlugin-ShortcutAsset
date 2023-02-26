@@ -66,49 +66,16 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 			{
 				case EShortcutAssetLinkType::Asset:
 				{
-					if (ShortcutAsset->LinkedAsset != nullptr)
+					FString LinkedPath = ShortcutAsset->LinkedAsset.GetAssetPathString();
+					UObject* Asset = ShortcutAsset->LinkedAsset.ResolveObject();
+					if (Asset != nullptr)
 					{
-						GEditor->EditObject(ShortcutAsset->LinkedAsset);
+						GEditor->EditObject(Asset);
 					}
 					else
 					{
 						bOpenShortcutEditor = true;
 					}
-					break;
-				}
-				case EShortcutAssetLinkType::AssetPath:
-				{
-					FString LinkedPath = ShortcutAsset->LinkedAssetPath.GetAssetPathString();
-					const FString DISPLAY_NAME_FOR_GAME_FOLDER = "/Content";
-					if (LinkedPath.StartsWith(DISPLAY_NAME_FOR_GAME_FOLDER, ESearchCase::CaseSensitive))
-					{
-						LinkedPath = "/Game" + LinkedPath.RightChop(DISPLAY_NAME_FOR_GAME_FOLDER.Len());
-					}
-
-					FAssetRegistryModule& AssetRegistryModule =
-						FModuleManager::LoadModuleChecked<FAssetRegistryModule>(FName("AssetRegistry"));
-					FARFilter Filter;
-					TArray<FAssetData> AssetData;
-					FString DirectoryPath;
-					bool bSuccess = false;
-					if (LinkedPath.Split(TEXT("/"), &DirectoryPath, nullptr, ESearchCase::CaseSensitive, ESearchDir::FromEnd))
-					{
-						Filter.PackagePaths.Add(*DirectoryPath);
-						AssetRegistryModule.Get().GetAssets(Filter, AssetData);
-
-						for (auto& Data : AssetData)
-						{
-							if (Data.ObjectPath.ToString() == LinkedPath)
-							{
-								UObject* Asset = Data.GetAsset();
-								GEditor->EditObject(Asset);
-								bSuccess = true;
-								break;
-							}
-						}
-					}
-					bOpenShortcutEditor = !bSuccess;
-
 					break;
 				}
 				case EShortcutAssetLinkType::DirectoryPath:

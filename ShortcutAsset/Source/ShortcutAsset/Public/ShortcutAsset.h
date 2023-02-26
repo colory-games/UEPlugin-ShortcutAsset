@@ -8,11 +8,8 @@
 UENUM(BlueprintType)
 enum class EShortcutAssetLinkType : uint8
 {
-	// The asset object (hard link).
+	// The asset object.
 	Asset,
-
-	// The asset path (soft link).
-	AssetPath,
 
 	// The directory path.
 	DirectoryPath,
@@ -20,7 +17,7 @@ enum class EShortcutAssetLinkType : uint8
 	MAX,
 };
 
-UCLASS(BlueprintType)
+UCLASS(BlueprintType, DisplayName="Shortcut")
 class SHORTCUTASSET_API UShortcutAsset : public UObject
 {
 	GENERATED_BODY()
@@ -30,15 +27,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property")
 	EShortcutAssetLinkType LinkType;
 
-	// The asset object linked by this asset. Valid if LinkType is Asset.
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property",
-		meta = (EditCondition = "LinkType == EShortcutAssetLinkType::Asset"))
-	UObject* LinkedAsset;
-
 	// The asset path linked by this asset. Valid if LinkType is Asset Path.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property",
-		meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::AssetPath"))
-	FSoftObjectPath LinkedAssetPath;
+		meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::Asset"))
+	FSoftObjectPath LinkedAsset;
 
 	// The directory path linked by this asset. Valid if LinkType is Directory.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property",

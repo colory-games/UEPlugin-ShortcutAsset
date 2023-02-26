@@ -22,8 +22,6 @@ void SShortcutAssetEditor::Construct(const FArguments& InArgs, UShortcutAsset* I
 	PropertiesView = PropertyEditorModule.CreateDetailView(ViewArgs);
 	PropertiesView->RegisterInstancedCustomPropertyTypeLayout(FName("SoftObjectPath"),
 		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FShortcutAssetPropertyTypeCustomization::MakeInstance));
-	PropertiesView->RegisterInstancedCustomPropertyTypeLayout(FName("Object"),
-		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FShortcutAssetPropertyTypeCustomization::MakeInstance));
 	PropertiesView->SetObject(ShortcutAsset);
 
 	// clang-format off
@@ -73,12 +71,6 @@ void FShortcutAssetPropertyTypeCustomization::CustomizeHeader(
 	{
 		OnShouldFilterAssetFunc = FOnShouldFilterAsset::CreateLambda([](const FAssetData& Data) -> bool {
 			return Data.GetClass() == UShortcutAsset::StaticClass();
-		});
-	}
-	else if (IsObjectProperty(Property))
-	{
-		OnShouldFilterAssetFunc = FOnShouldFilterAsset::CreateLambda([](const FAssetData& Data) -> bool {
-			return Data.GetClass() == UShortcutAsset::StaticClass() || Data.GetClass() == UWorld::StaticClass();
 		});
 	}
 	else
