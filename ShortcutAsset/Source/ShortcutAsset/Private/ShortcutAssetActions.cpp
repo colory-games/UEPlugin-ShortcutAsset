@@ -43,13 +43,13 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 			FExecuteAction::CreateLambda([=]
 			{
 #ifdef SA_FREE_VERSION
-				if (CheckLimitation())
+				if (ReachFreeVersionLimitation())
 				{
 					return;
 				}
 #endif	  // SA_FREE_VERSION
 
-				TArray<UObject*> Objects = {InObjects[0]};
+				TArray<TObjectPtr<UObject>> Objects = {InObjects[0]};
 				UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 				Subsystem->OpenShortcutAssetEditor(Objects);
 			}),

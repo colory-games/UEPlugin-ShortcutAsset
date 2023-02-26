@@ -8,15 +8,15 @@ void UShortcutAssetSubsystem::Deinitialize()
 {
 }
 
-void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<UObject*> ObjectsToEdit)
+void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<TObjectPtr<UObject>> ObjectsToEdit)
 {
 	// TODO: Handle more than 2 objects at once.
 	if (ObjectsToEdit.Num() == 1)
 	{
-		UObject* Object = ObjectsToEdit[0];
+		TObjectPtr<UObject> Object = ObjectsToEdit[0];
 		if (OpenedEditorInstances.Contains(Object))
 		{
-			OpenedEditorInstances[Object]->FocusWindow(Object);
+			OpenedEditorInstances[Object]->GetInstanceInterface()->FocusWindow(Object);
 			return;
 		}
 
@@ -26,7 +26,7 @@ void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<UObject*> ObjectsTo
 			return;
 		}
 
-		ShortcutAssetEditor = NewObject<UShortcutAssetEditor>(this);
+		UShortcutAssetEditor* ShortcutAssetEditor = NewObject<UShortcutAssetEditor>(this);
 		ShortcutAssetEditor->Initialize(ObjectsToEdit);
 
 		for (auto& O : ObjectsToEdit)
@@ -36,7 +36,7 @@ void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<UObject*> ObjectsTo
 	}
 }
 
-void UShortcutAssetSubsystem::NotifyShortcutAssetEditorClosed(TArray<UObject*> ObjectsAreEditing)
+void UShortcutAssetSubsystem::NotifyShortcutAssetEditorClosed(TArray<TObjectPtr<UObject>> ObjectsAreEditing)
 {
 	for (auto Object : ObjectsAreEditing)
 	{

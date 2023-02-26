@@ -52,13 +52,10 @@ FShortcutAssetEditorToolkit::FShortcutAssetEditorToolkit(UAssetEditor* InOwningA
 
 FShortcutAssetEditorToolkit::~FShortcutAssetEditorToolkit()
 {
-	FReimportManager::Instance()->OnPreReimport().RemoveAll(this);
-	FReimportManager::Instance()->OnPostReimport().RemoveAll(this);
-
 	UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 	if (Subsystem)
 	{
-		TArray<UObject*> ObjectsToEdit;
+		TArray<TObjectPtr<UObject>> ObjectsToEdit;
 		OwningAssetEditor->GetObjectsToEdit(ObjectsToEdit);
 		Subsystem->NotifyShortcutAssetEditorClosed(ObjectsToEdit);
 	}
@@ -66,7 +63,7 @@ FShortcutAssetEditorToolkit::~FShortcutAssetEditorToolkit()
 
 FName FShortcutAssetEditorToolkit::GetToolkitFName() const
 {
-	return FName("ShortcutAssetEditor");
+	return FName("ShortcutEditor");
 }
 
 FText FShortcutAssetEditorToolkit::GetBaseToolkitName() const
