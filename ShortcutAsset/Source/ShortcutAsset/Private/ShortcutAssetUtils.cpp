@@ -3,7 +3,9 @@
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "Misc/MessageDialog.h"
 
-bool CheckLimitation(bool bIsCreateNew)
+#define LOCTEXT_NAMESPACE "ShortcutAsset"
+
+bool ReachFreeVersionLimitation(bool bIsCreateNew)
 {
 	int32 MaxAssets = 3;
 	if (!bIsCreateNew)
@@ -27,8 +29,10 @@ bool CheckLimitation(bool bIsCreateNew)
 			FPlatformProcess::LaunchURL(
 				TEXT("https://forums.unrealengine.com/t/how-to-open-a-browser-from-the-game/24346/3"), NULL, NULL);
 		}
-		return false;
+		return true;
 	}
 
-	return true;
+	return false;
 }
+
+#undef LOCTEXT_NAMESPACE

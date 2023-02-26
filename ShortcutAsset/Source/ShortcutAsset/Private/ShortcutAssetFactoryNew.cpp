@@ -1,7 +1,7 @@
 #include "ShortcutAssetFactoryNew.h"
 
 #include "ShortcutAsset.h"
-#include "ShortAssetUtils.h"
+#include "ShortcutAssetUtils.h"
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
@@ -16,7 +16,7 @@ UObject* UShortcutAssetFactoryNew::FactoryCreateNew(
 	UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
 {
 #ifdef SA_FREE_VERSION
-	if (CheckLimitation(true))
+	if (ReachFreeVersionLimitation(true))
 	{
 		return nullptr;
 	}

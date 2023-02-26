@@ -65,7 +65,7 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
 {
 #ifdef SA_FREE_VERSION
-	if (CheckLimitation())
+	if (ReachFreeVersionLimitation())
 	{
 		return;
 	}
