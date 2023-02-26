@@ -91,8 +91,7 @@ FString FShortcutAssetEditorToolkit::GetDocumentationLink() const
 
 void FShortcutAssetEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
-	WorkspaceMenuCategory =
-		InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_ShortcutEditor", "Shortcut Editor"));
+	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_ShortcutEditor", "Shortcut Editor"));
 
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
 

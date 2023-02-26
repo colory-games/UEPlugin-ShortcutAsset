@@ -17,7 +17,7 @@ enum class EShortcutAssetLinkType : uint8
 	MAX,
 };
 
-UCLASS(BlueprintType, DisplayName="Shortcut")
+UCLASS(BlueprintType, DisplayName = "Shortcut")
 class SHORTCUTASSET_API UShortcutAsset : public UObject
 {
 	GENERATED_BODY()

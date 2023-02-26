@@ -1,9 +1,8 @@
 #pragma once
 
 #include "IPropertyTypeCustomization.h"
-#include "Widgets/SCompoundWidget.h"
 #include "ShortcutAsset.h"
-
+#include "Widgets/SCompoundWidget.h"
 
 class SShortcutAssetEditor : public SCompoundWidget
 {
@@ -24,7 +23,6 @@ public:
 
 class FShortcutAssetPropertyTypeCustomization : public IPropertyTypeCustomization
 {
-
 public:
 	FShortcutAssetPropertyTypeCustomization();
 
@@ -36,8 +34,8 @@ public:
 	bool IsSoftObjectPathProperty(const FProperty* Property) const;
 	bool IsObjectProperty(const FProperty* Property) const;
 
-	virtual void CustomizeHeader(
-		TSharedRef<IPropertyHandle> PropertyHandle, FDetailWidgetRow& HeaderRow, IPropertyTypeCustomizationUtils& CustomizationUtils) override;
-	virtual void CustomizeChildren(
-		TSharedRef<IPropertyHandle> PropertyHandle, IDetailChildrenBuilder& Builder, IPropertyTypeCustomizationUtils& CustomizationUtils) override;
+	virtual void CustomizeHeader(TSharedRef<IPropertyHandle> PropertyHandle, FDetailWidgetRow& HeaderRow,
+		IPropertyTypeCustomizationUtils& CustomizationUtils) override;
+	virtual void CustomizeChildren(TSharedRef<IPropertyHandle> PropertyHandle, IDetailChildrenBuilder& Builder,
+		IPropertyTypeCustomizationUtils& CustomizationUtils) override;
 };

@@ -69,15 +69,15 @@ void FShortcutAssetPropertyTypeCustomization::CustomizeHeader(
 	FOnShouldFilterAsset OnShouldFilterAssetFunc;
 	if (IsSoftObjectPathProperty(Property))
 	{
-		OnShouldFilterAssetFunc = FOnShouldFilterAsset::CreateLambda([](const FAssetData& Data) -> bool {
-			return Data.GetClass() == UShortcutAsset::StaticClass();
-		});
+		OnShouldFilterAssetFunc = FOnShouldFilterAsset::CreateLambda(
+			[](const FAssetData& Data) -> bool { return Data.GetClass() == UShortcutAsset::StaticClass(); });
 	}
 	else
 	{
 		check(0);
 	}
 
+	// clang-format off
 	HeaderRow
 		.NameContent()
 		[
@@ -93,9 +93,10 @@ void FShortcutAssetPropertyTypeCustomization::CustomizeHeader(
 			.OnShouldFilterAsset(OnShouldFilterAssetFunc)
 			.PropertyHandle(PropertyHandle)
 		];
+	// clang-format on
 }
 
-void FShortcutAssetPropertyTypeCustomization::CustomizeChildren(
-	TSharedRef<IPropertyHandle> PropertyHandle, IDetailChildrenBuilder& Builder, IPropertyTypeCustomizationUtils& CustomizationUtils)
+void FShortcutAssetPropertyTypeCustomization::CustomizeChildren(TSharedRef<IPropertyHandle> PropertyHandle,
+	IDetailChildrenBuilder& Builder, IPropertyTypeCustomizationUtils& CustomizationUtils)
 {
 }

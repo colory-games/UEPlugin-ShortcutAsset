@@ -1,9 +1,8 @@
 #include "ShortcutAssetModule.h"
 
 #include "ShortcutAssetActions.h"
-#include "Styling/SlateStyleRegistry.h"
 #include "Styling/SlateStyle.h"
-
+#include "Styling/SlateStyleRegistry.h"
 
 void FShortcutAssetModule::StartupModule()
 {
@@ -47,8 +46,10 @@ void FShortcutAssetModule::UnregisterActions()
 
 void FShortcutAssetModule::RegisterStyles()
 {
-	FString ProjectPluginDirPath = FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectPluginsDir() + "ShortcutAsset"));
-	FString EnginePluginDirPath = FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::EnginePluginsDir() + "Marketplace/ShortcutAsset"));
+	FString ProjectPluginDirPath =
+		FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectPluginsDir() + "ShortcutAsset"));
+	FString EnginePluginDirPath =
+		FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::EnginePluginsDir() + "Marketplace/ShortcutAsset"));
 	FString ShortcutAssetDirPath;
 
 	if (FPaths::DirectoryExists(ProjectPluginDirPath))
@@ -67,9 +68,11 @@ void FShortcutAssetModule::RegisterStyles()
 	TSharedRef<FSlateStyleSet> NewStyle = MakeShareable(new FSlateStyleSet("ShortcutAssetStyle"));
 	NewStyle->SetContentRoot(ShortcutAssetDirPath);
 	NewStyle->Set("ClassThumbnail.ShortcutAsset",
-		new FSlateImageBrush(NewStyle->RootToContentDir(TEXT("Resources/AssetIcons/ShortcutAssetThumbnail_64"), TEXT(".png")), FVector2D(64.0f, 64.0f)));
+		new FSlateImageBrush(NewStyle->RootToContentDir(TEXT("Resources/AssetIcons/ShortcutAssetThumbnail_64"), TEXT(".png")),
+			FVector2D(64.0f, 64.0f)));
 	NewStyle->Set("ClassIcon.ShortcutAsset",
-		new FSlateImageBrush(NewStyle->RootToContentDir(TEXT("Resources/AssetIcons/ShortcutAssetIcon_16"), TEXT(".png")), FVector2D(16.0f, 16.0f)));
+		new FSlateImageBrush(NewStyle->RootToContentDir(TEXT("Resources/AssetIcons/ShortcutAssetIcon_16"), TEXT(".png")),
+			FVector2D(16.0f, 16.0f)));
 
 	FSlateStyleRegistry::RegisterSlateStyle(*NewStyle);
 	RegisteredSlateStyleSets.Add(NewStyle);
