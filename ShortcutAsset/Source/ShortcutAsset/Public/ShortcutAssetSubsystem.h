@@ -11,6 +11,9 @@ class SHORTCUTASSET_API UShortcutAssetSubsystem : public UEditorSubsystem
 {
 	GENERATED_BODY()
 
+	UPROPERTY()
+	UShortcutAssetEditor* ShortcutAssetEditor = nullptr;
+
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;

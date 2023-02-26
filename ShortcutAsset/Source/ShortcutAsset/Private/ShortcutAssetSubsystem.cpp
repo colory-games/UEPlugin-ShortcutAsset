@@ -26,7 +26,7 @@ void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<UObject*> ObjectsTo
 			return;
 		}
 
-		UShortcutAssetEditor* ShortcutAssetEditor = NewObject<UShortcutAssetEditor>(this);
+		ShortcutAssetEditor = NewObject<UShortcutAssetEditor>(this);
 		ShortcutAssetEditor->Initialize(ObjectsToEdit);
 
 		for (auto& O : ObjectsToEdit)

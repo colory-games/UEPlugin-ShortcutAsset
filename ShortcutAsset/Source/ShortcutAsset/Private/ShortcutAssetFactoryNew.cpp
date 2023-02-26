@@ -1,8 +1,7 @@
 #include "ShortcutAssetFactoryNew.h"
 
-#include "AssetRegistry/AssetRegistryModule.h"
-#include "Misc/MessageDialog.h"
 #include "ShortcutAsset.h"
+#include "ShortAssetUtils.h"
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
@@ -17,22 +16,8 @@ UObject* UShortcutAssetFactoryNew::FactoryCreateNew(
 	UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
 {
 #ifdef SA_FREE_VERSION
-	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>(FName("AssetRegistry"));
-	FARFilter Filter;
-	TArray<FAssetData> AssetData;
-	Filter.ClassNames.Add(UShortcutAsset::StaticClass()->GetFName());
-
-	AssetRegistryModule.Get().GetAssets(Filter, AssetData);
-	if (AssetData.Num() >= 3)
+	if (CheckLimitation(true))
 	{
-		FText TitleText = LOCTEXT("Title", "Reached Free Version Limitation");
-		FText MessageText =
-			LOCTEXT("Message", "Free version can only create up to 3 assets.\nDo you want to open the marketplace of this plugin?");
-		if (FMessageDialog::Open(EAppMsgType::OkCancel, MessageText, &TitleText) == EAppReturnType::Ok)
-		{
-			FPlatformProcess::LaunchURL(
-				TEXT("https://forums.unrealengine.com/t/how-to-open-a-browser-from-the-game/24346/3"), NULL, NULL);
-		}
 		return nullptr;
 	}
 #endif	  // SA_FREE_VERSION

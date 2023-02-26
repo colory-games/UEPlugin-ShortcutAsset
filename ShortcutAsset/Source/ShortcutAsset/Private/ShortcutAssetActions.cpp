@@ -6,6 +6,7 @@
 #include "ShortcutAsset.h"
 #include "ShortcutAssetEditorToolkit.h"
 #include "ShortcutAssetSubsystem.h"
+#include "ShortcutAssetUtils.h"
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
@@ -41,6 +42,13 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 		FUIAction(
 			FExecuteAction::CreateLambda([=]
 			{
+#ifdef SA_FREE_VERSION
+				if (CheckLimitation())
+				{
+					return;
+				}
+#endif	  // SA_FREE_VERSION
+
 				TArray<UObject*> Objects = {InObjects[0]};
 				UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 				Subsystem->OpenShortcutAssetEditor(Objects);
@@ -56,6 +64,13 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 
 void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
 {
+#ifdef SA_FREE_VERSION
+	if (CheckLimitation())
+	{
+		return;
+	}
+#endif	  // SA_FREE_VERSION
+
 	for (auto It = InObjects.CreateConstIterator(); It; ++It)
 	{
 		auto ShortcutAsset = Cast<UShortcutAsset>(*It);
@@ -67,19 +82,23 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 				case EShortcutAssetLinkType::Asset:
 				{
 					FString LinkedPath = ShortcutAsset->LinkedAsset.GetAssetPathString();
+					if (LinkedPath.IsEmpty())
+					{
+						bOpenShortcutEditor = true;
+						break;
+					}
+
 					UObject* Asset = ShortcutAsset->LinkedAsset.ResolveObject();
 					if (Asset == nullptr)
 					{
 						Asset = ShortcutAsset->LinkedAsset.TryLoad();
 					}
-					if (Asset != nullptr)
-					{
-						GEditor->EditObject(Asset);
-					}
-					else
+					if (Asset == nullptr)
 					{
 						bOpenShortcutEditor = true;
+						break;
 					}
+					GEditor->EditObject(Asset);
 					break;
 				}
 				case EShortcutAssetLinkType::DirectoryPath:
