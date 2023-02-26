@@ -68,6 +68,10 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 				{
 					FString LinkedPath = ShortcutAsset->LinkedAsset.GetAssetPathString();
 					UObject* Asset = ShortcutAsset->LinkedAsset.ResolveObject();
+					if (Asset == nullptr)
+					{
+						Asset = ShortcutAsset->LinkedAsset.TryLoad();
+					}
 					if (Asset != nullptr)
 					{
 						GEditor->EditObject(Asset);
