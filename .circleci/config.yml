@@ -43,7 +43,7 @@ jobs:
           password: $GHCR_PASSWORD
     steps:
       - checkout
-      <<: *preprocess_plugin_sources
+      - <<: *preprocess_plugin_sources
       - run:
           name: "Build Plugin"
           command: |
@@ -65,7 +65,7 @@ jobs:
           password: $GHCR_PASSWORD
     steps:
       - checkout
-      <<: *preprocess_plugin_sources
+      - <<: *preprocess_plugin_sources
       - run:
           name: "Copy plugin sources"
           command: |

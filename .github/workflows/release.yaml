@@ -34,7 +34,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      <<: *preprocess_plugin_sources
+      - <<: *preprocess_plugin_sources
 
       - name: Compress plugin's sources
         run: |
