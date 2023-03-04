@@ -32,13 +32,16 @@ jobs:
           password: $GHCR_PASSWORD
     steps:
       - checkout
-      - &licese_remove run:
+      - &licese_remove
+        run:
           name: Run scripts for the license removing
           command: bash tools/remove_license.sh ShortcutAsset << parameters.version >>
-      - &code_remove run:
+      - &code_remove
+        run:
           name: Run scripts for the code removing
           command: bash tools/remove_code.sh ShortcutAsset << parameters.unreal-engine-version >> << parameters.version >> .
-      - &replace_engine_version run:
+      - &replace_engine_version
+        run:
           name: "Run scripts for the release"
           command: bash tools/replace_engine_version.sh ShortcutAsset << parameters.unreal-engine-version >>
       - run:
