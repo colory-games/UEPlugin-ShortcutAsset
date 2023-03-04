@@ -8,12 +8,12 @@ void UShortcutAssetSubsystem::Deinitialize()
 {
 }
 
-void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<TObjectPtr<UObject>> ObjectsToEdit)
+void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<OBJECT_PTR(UObject)> ObjectsToEdit)
 {
 	// TODO: Handle more than 2 objects at once.
 	if (ObjectsToEdit.Num() == 1)
 	{
-		TObjectPtr<UObject> Object = ObjectsToEdit[0];
+		OBJECT_PTR(UObject) Object = ObjectsToEdit[0];
 		if (OpenedEditorInstances.Contains(Object))
 		{
 			OpenedEditorInstances[Object]->GetInstanceInterface()->FocusWindow(Object);
@@ -36,7 +36,7 @@ void UShortcutAssetSubsystem::OpenShortcutAssetEditor(TArray<TObjectPtr<UObject>
 	}
 }
 
-void UShortcutAssetSubsystem::NotifyShortcutAssetEditorClosed(TArray<TObjectPtr<UObject>> ObjectsAreEditing)
+void UShortcutAssetSubsystem::NotifyShortcutAssetEditorClosed(TArray<OBJECT_PTR(UObject)> ObjectsAreEditing)
 {
 	for (auto Object : ObjectsAreEditing)
 	{

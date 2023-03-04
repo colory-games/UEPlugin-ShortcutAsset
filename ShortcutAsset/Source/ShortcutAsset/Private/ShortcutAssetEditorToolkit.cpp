@@ -55,7 +55,7 @@ FShortcutAssetEditorToolkit::~FShortcutAssetEditorToolkit()
 	UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 	if (Subsystem)
 	{
-		TArray<TObjectPtr<UObject>> ObjectsToEdit;
+		TArray<OBJECT_PTR(UObject)> ObjectsToEdit;
 		OwningAssetEditor->GetObjectsToEdit(ObjectsToEdit);
 		Subsystem->NotifyShortcutAssetEditorClosed(ObjectsToEdit);
 	}

@@ -49,7 +49,7 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 				}
 #endif	  // SA_FREE_VERSION
 
-				TArray<TObjectPtr<UObject>> Objects = {InObjects[0]};
+				TArray<OBJECT_PTR(UObject)> Objects = {InObjects[0]};
 				UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 				Subsystem->OpenShortcutAssetEditor(Objects);
 			}),

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Compatibility.h"
 #include "EditorSubsystem.h"
 #include "ShortcutAssetEditor.h"
 #include "ShortcutAssetEditorToolkit.h"
@@ -15,10 +16,10 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
-	void OpenShortcutAssetEditor(TArray<TObjectPtr<UObject>> ObjectsToEdit);
-	void NotifyShortcutAssetEditorClosed(TArray<TObjectPtr<UObject>> ObjectsAreEditing);
+	void OpenShortcutAssetEditor(TArray<OBJECT_PTR(UObject)> ObjectsToEdit);
+	void NotifyShortcutAssetEditorClosed(TArray<OBJECT_PTR(UObject)> ObjectsAreEditing);
 
-	TMap<TObjectPtr<UObject>, TObjectPtr<UShortcutAssetEditor>> OpenedEditorInstances;
+	TMap<OBJECT_PTR(UObject), OBJECT_PTR(UShortcutAssetEditor)> OpenedEditorInstances;
 
 	TSharedPtr<IToolkitHost> ToolKitHostRef;
 };
