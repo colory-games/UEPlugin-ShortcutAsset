@@ -8,17 +8,6 @@ on:
       - 'v*'
   pull_request:
 
-preprocess_plugin_sources: &preprocess_plugin_sources
-  - name: Run scripts for the license removing
-    run: |
-      bash tools/remove_license.sh ShortcutAsset ${{ matrix.version }}
-  - name: Run scripts for the code removing
-    run: |
-      bash tools/remove_code.sh ShortcutAsset ${{ matrix.unreal_engine_version }} ${{ matrix.version }} .
-  - name: Run scripts for the release
-    run: |
-      bash tools/replace_engine_version.sh ShortcutAsset ${{ matrix.unreal_engine_version }}
-
 jobs:
   plugin-pack:
     name: Pack plugin sources
@@ -34,7 +23,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - <<: *preprocess_plugin_sources
+      - name: Run scripts for the license removing
+        run: |
+          bash tools/remove_license.sh ShortcutAsset ${{ matrix.version }}
+
+      - name: Run scripts for the code removing
+        run: |
+          bash tools/remove_code.sh ShortcutAsset ${{ matrix.unreal_engine_version }} ${{ matrix.version }} .
+
+      - name: Run scripts for the release
+        run: |
+          bash tools/replace_engine_version.sh ShortcutAsset ${{ matrix.unreal_engine_version }}
 
       - name: Compress plugin's sources
         run: |
