@@ -14,8 +14,19 @@ workflows:
             - unreal-engine-ci
           matrix:
             parameters:
-              unreal-engine-version: ["5.0.0"]
+              unreal-engine-version: ["5.1.0"]
               version: ["full"]
+
+preprocess_plugin_sources: &preprocess_plugin_sources
+  - run:
+      name: Run scripts for the license removing
+      command: bash tools/remove_license.sh ShortcutAsset << parameters.version >>
+  - run:
+      name: Run scripts for the code removing
+      command: bash tools/remove_code.sh ShortcutAsset << parameters.unreal-engine-version >> << parameters.version >> .
+  - run:
+      name: "Run scripts for the release"
+      command: bash tools/replace_engine_version.sh ShortcutAsset << parameters.unreal-engine-version >>
 
 version: 2.1
 jobs:
@@ -32,15 +43,7 @@ jobs:
           password: $GHCR_PASSWORD
     steps:
       - checkout
-      - run:
-          name: Run scripts for the license removing
-          command: bash tools/remove_license.sh ShortcutAsset << parameters.version >>
-      - run:
-          name: Run scripts for the code removing
-          command: bash tools/remove_code.sh ShortcutAsset << parameters.unreal-engine-version >> << parameters.version >> .
-      - run:
-          name: "Run scripts for the release"
-          command: bash tools/replace_engine_version.sh ShortcutAsset << parameters.unreal-engine-version >>
+      <<: *preprocess_plugin_sources
       - run:
           name: "Build Plugin"
           command: |
@@ -62,15 +65,7 @@ jobs:
           password: $GHCR_PASSWORD
     steps:
       - checkout
-      - run:
-          name: Run scripts for the license removing
-          command: bash tools/remove_license.sh ShortcutAsset << parameters.version >>
-      - run:
-          name: Run scripts for the code removing
-          command: bash tools/remove_code.sh ShortcutAsset << parameters.unreal-engine-version >> << parameters.version >> .
-      - run:
-          name: "Run scripts for the release"
-          command: bash tools/replace_engine_version.sh ShortcutAsset << parameters.unreal-engine-version >>
+      <<: *preprocess_plugin_sources
       - run:
           name: "Copy plugin sources"
           command: |
