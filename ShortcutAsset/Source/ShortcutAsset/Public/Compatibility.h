@@ -7,4 +7,3 @@
 #else
 #define OBJECT_PTR(Class) TObjectPtr<Class>
 #endif
-
