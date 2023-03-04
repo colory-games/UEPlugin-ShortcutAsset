@@ -119,11 +119,19 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					ContentBrowserModule.Get().SyncBrowserToFolders({LinkedPath}, false, false);
 
 					// Check if the current path is changed.
+#if UE_VERSION_OLDER_THAN(5, 0, 0)
+					FString CurrentPath = ContentBrowserModule.Get().GetCurrentPath();
+					if (CurrentPath != LinkedPath)
+					{
+						bOpenShortcutEditor = true;
+					}
+#else
 					FContentBrowserItemPath CurrentPath = ContentBrowserModule.Get().GetCurrentPath();
 					if (CurrentPath.GetInternalPathName().ToString() != LinkedPath)
 					{
 						bOpenShortcutEditor = true;
 					}
+#endif
 					break;
 				}
 			}	 // switch
