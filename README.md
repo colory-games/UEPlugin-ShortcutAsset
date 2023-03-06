@@ -11,7 +11,10 @@ By using this plugin, you can realize a flexible access points.
 
 ## Features
 
-This plugin adds a custom asset named **Shortcut**.  
+This plugin adds a custom asset named **Shortcut**.
+
+![Shortcut Asset](docs/images/shortcut_asset.png)
+
 The **Shortcut** asset supports the following features.
 
 * Access to an asset with a different name.
@@ -44,9 +47,7 @@ To get the benefit fully from this plugin, please consider purchasing this plugi
 
 ## Tutorial
 
-See [the tutorial document]().
-
-> TODO: Add documentation link.
+See [the tutorial document](docs/tutorial.md).
 
 ## Change Log
 

@@ -1,6 +1,9 @@
 # Tutorial
 
-## Create a shortcut to another asset
+* [Asset Shortcut](#asset-shortcut)
+* [Directory Shortcut](#directory-shortcut)
+
+## Asset Shortcut
 
 A **Shortcut** asset can be an access point to another asset.  
 You can open another asset by opening the **Shortcut** asset.
@@ -15,9 +18,9 @@ You can open another asset by opening the **Shortcut** asset.
 6. Save and close the editor.
 7. Click the asset, and then you can see that a linked asset will be opened.
 
-> TODO: Add the image to the configuration.
+![Asset Shortcut](images/asset_shortcut.png)
 
-## Create a shortcut to a directory
+## Directory Shortcut
 
 A **Shortcut** asset can be an access point to a directory.  
 You can open a directory by opening the **Shortcut** asset.
@@ -32,4 +35,4 @@ You can open a directory by opening the **Shortcut** asset.
 6. Save and close the editor.
 7. Click the asset, and then you can move to a linked directory.
 
-> TODO: Add the image to the configuration.
+![Directory Shortcut](images/directory_shortcut.png)
