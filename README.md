@@ -1,11 +1,11 @@
 # Unreal Engine Plugin: Shortcut Asset
 
-**Shortcut Asset** is an Unreal Engine plugin that adds asset to link another asset or a directory with the shortcut asset.  
+**Shortcut Asset** is an Unreal Engine plugin that adds asset to open a linked asset/directory with the shortcut asset.  
 This works like a shortcut file in Windows/macOS or a symbolic link in Linux.
 
 ![Shortcut Asset Thumbnail](docs/images/shortcut_asset_thumbnail.png)
 
-Unreal Engine supports the Collections and Favourites feature to link assets/directories with more accessibility.  
+Unreal Engine supports the Collections and Favourites feature to open assets/directories with more accessibility.  
 However, these features aggregate the access points, which does not allows you to manage assets flexibly.  
 By using this plugin, you can realize a flexible access points.
 
