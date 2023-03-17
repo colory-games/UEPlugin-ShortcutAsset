@@ -1,27 +1,32 @@
 # Unreal Engine Plugin: Shortcut Asset
 
-**Shortcut Asset** is an Unreal Engine plugin that adds asset to open a linked asset/directory with the shortcut asset.  
+**Shortcut Asset** is an Unreal Engine plugin that adds asset to open a linked asset/directory.  
 This works like a shortcut file in Windows/macOS or a symbolic link in Linux.
 
 ![Shortcut Asset Thumbnail](docs/images/shortcut_asset_thumbnail.png)
 
-Unreal Engine supports the Collections and Favourites feature to open assets/directories with more accessibility.  
+Unreal Engine supports the "Collections" and "Favorites" feature to open assets/directories with more accessibility.  
 However, these features aggregate the access points, which does not allows you to manage assets flexibly.  
-By using this plugin, you can realize a flexible access points.
+For example, the "Collections" feature can create the access point to the asset, but all access points are aggregated into the Collections category.
+It also does not support directory access.  
+The "Favourites" feature can create the access point to the directory, but all access points are aggregated to the Favourites category.
+It also does not support asset access.  
+
+Shortcut asset overcomes all these problems.
 
 ## Features
 
-This plugin adds a custom asset named **Shortcut**.
+This plugin adds an asset named **Shortcut**.
 
 ![Shortcut Asset File](docs/images/shortcut_asset_file.png)
 
 The **Shortcut** asset supports the following features.
 
-* Access to an asset with a shortcut asset.
+* Open an asset with a shortcut asset.
 
 ![Access to an asset with a shortcut asset](docs/images/access_to_asset.png)
 
-* Access to a directory with a shortcut asset.
+* Open a directory with a shortcut asset.
 
 ![Access to a directory with a shortcut asset](docs/images/access_to_directory.png)
 

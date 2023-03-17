@@ -6,7 +6,7 @@
 ## Asset Shortcut
 
 A **Shortcut** asset can be an access point to another asset.  
-You can open another asset by opening the **Shortcut** asset.
+You can open another asset by double-clicking the **Shortcut** asset.
 
 ### Usage
 
@@ -14,7 +14,7 @@ You can open another asset by opening the **Shortcut** asset.
 
    ![Create a shortcut asset](images/create_shortcut_asset.png)
 
-2. Right click on the **Shortcut** asset to open the context menu.
+2. Right-click on the **Shortcut** asset to open the context menu.
 3. Click on the [Edit Link] menu to open an editor to edit the link.
 
    ![Edit the link](images/edit_link.png)
@@ -23,9 +23,9 @@ You can open another asset by opening the **Shortcut** asset.
 
    ![Asset shortcut](images/asset_shortcut.png)
 
-5. Set [Linked Asset] to another asset that you want to link to.
+5. Set [Linked Asset] another asset that you want to link to.
 6. Save and close the editor.
-7. Click the asset, and then you can see that a linked asset will be opened.
+7. Double-click the asset, and then you can see that a linked asset will be opened.
 
    ![Access to the asset](images/access_to_asset.png)
 
@@ -40,7 +40,7 @@ You can open a directory by opening the **Shortcut** asset.
 
    ![Create a shortcut asset](images/create_shortcut_asset.png)
 
-2. Right click on the **Shortcut** asset to open the context menu.
+2. Right-click on the **Shortcut** asset to open the context menu.
 3. Click on the [Edit Link] menu to open an editor to edit the link.
 
    ![Edit the link](images/edit_link.png)
@@ -49,8 +49,8 @@ You can open a directory by opening the **Shortcut** asset.
 
    ![Directory shortcut](images/directory_shortcut.png)
 
-5. Set [Linked Directory Path] to a directory that you want to link to.
+5. Set [Linked Directory Path] a directory that you want to link to.
 6. Save and close the editor.
-7. Click the asset, and then you can move to a linked directory.
+7. Double-click the asset, and then you can move to a linked directory.
 
   ![Access to the directory](images/access_to_directory.png)
