@@ -1,6 +1,6 @@
 # Unreal Engine Plugin: Shortcut Asset
 
-**Shortcut Asset** is an Unreal Engine plugin that adds assets to link the assets/directories with different names.  
+**Shortcut Asset** is an Unreal Engine plugin that adds asset to link another asset or a directory with the shortcut asset.  
 This works like a shortcut file in Windows/macOS or a symbolic link in Linux.
 
 ![Shortcut Asset Thumbnail](docs/images/shortcut_asset_thumbnail.png)
@@ -17,8 +17,13 @@ This plugin adds a custom asset named **Shortcut**.
 
 The **Shortcut** asset supports the following features.
 
-* Access to an asset with a different name.
-* Access to a directory with a different name.
+* Access to an asset with a shortcut asset.
+
+![Access to an asset with a shortcut asset](docs/images/access_to_asset.png)
+
+* Access to a directory with a shortcut asset.
+
+![Access to a directory with a shortcut asset](docs/images/access_to_directory.png)
 
 ## Supported Environment
 
