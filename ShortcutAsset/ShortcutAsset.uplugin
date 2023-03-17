@@ -1,0 +1,23 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.0.0",
+  "FriendlyName": "Shortcut Asset",
+  "Description": "Asset to link the other assets",
+  "Category": "Other",
+  "CreatedBy": "nutti (Colory Games)",
+  "CreatedByURL": "https://github.com/colory-games/UEPlugin-ShortcutAssets",
+  "DocsURL": "",
+  "MarketplaceURL": "",
+  "SupportURL": "",
+  "CanContainContent": true,
+  "IsBetaVersion": false,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "ShortcutAsset",
+      "Type": "Editor",
+      "LoadingPhase": "Default"
+    }
+  ]
+}
