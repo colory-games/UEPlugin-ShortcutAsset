@@ -17,7 +17,7 @@ You can open another asset by double-clicking the **Shortcut** asset.
 2. Right-click on the **Shortcut** asset to open the context menu.
 3. Click on the [Edit Link] menu to open an editor to edit the link.
 
-   ![Edit the link](images/edit_link.png)
+   ![Edit the link](images/edit_asset_link.png)
 
 4. Change the [Link Type] to [Asset].
 
@@ -43,7 +43,7 @@ You can open a directory by opening the **Shortcut** asset.
 2. Right-click on the **Shortcut** asset to open the context menu.
 3. Click on the [Edit Link] menu to open an editor to edit the link.
 
-   ![Edit the link](images/edit_link.png)
+   ![Edit the link](images/edit_directory_link.png)
 
 4. Change the [Link Type] to [Directory Path].
 
