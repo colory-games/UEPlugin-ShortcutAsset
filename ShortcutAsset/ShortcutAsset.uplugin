@@ -4,12 +4,13 @@
   "VersionName": "1.0.0",
   "FriendlyName": "Shortcut Asset",
   "Description": "Asset to open the linked asset/directory",
+  "EngineVersion": "5.1.0",
   "Category": "Other",
   "CreatedBy": "nutti (Colory Games)",
   "CreatedByURL": "https://github.com/colory-games/UEPlugin-ShortcutAssets",
-  "DocsURL": "",
-  "MarketplaceURL": "",
-  "SupportURL": "",
+  "DocsURL": "https://github.com/colory-games/UEPlugin-ShortcutAsset",
+  "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/60765ae74e3c4eb9b956cef59701e80d",
+  "SupportURL": "https://github.com/colory-games/UEPlugin-ShortcutAsset",
   "CanContainContent": true,
   "IsBetaVersion": false,
   "Installed": false,
@@ -17,7 +18,13 @@
     {
       "Name": "ShortcutAsset",
       "Type": "Editor",
-      "LoadingPhase": "Default"
+      "LoadingPhase": "Default",
+      "WhitelistPlatforms": [
+        "Win32",
+        "Win64",
+        "Mac",
+        "Linux"
+      ]
     }
   ]
 }
