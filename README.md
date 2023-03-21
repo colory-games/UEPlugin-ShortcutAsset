@@ -40,10 +40,8 @@ This plugin supports on the below environment.
 
 ## Installation
 
-This plugin is distributed at [the Marketplace]().  
+This plugin is distributed at [the Marketplace](https://www.unrealengine.com/marketplace/en-US/product/shortcut-asset).  
 You can buy and install it from there.
-
-> TODO: Add link to marketplace.
 
 A free trial version is also available.  
 See [the installation document](docs/installation.md) if you want to install the free trial version.  
@@ -51,9 +49,7 @@ The free trial version has the following limitation.
 
 * The number of assets is limited to 3.
 
-To get the benefit fully from this plugin, please consider purchasing this plugin at [the Marketplace]().
-
-> TODO: Add link to marketplace.
+To get the benefit fully from this plugin, please consider purchasing this plugin at [the Marketplace](https://www.unrealengine.com/marketplace/en-US/product/shortcut-asset).
 
 ## Tutorial
 
