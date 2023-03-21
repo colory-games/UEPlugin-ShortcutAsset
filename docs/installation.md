@@ -5,9 +5,7 @@ The free trial version has the following limitation.
 
 * The number of assets is limited to 3.
 
-To get the benefit fully from this plugin, please consider purchasing this plugin at [the Marketplace]().
-
-> TODO: Add link to marketplace
+To get the benefit fully from this plugin, please consider purchasing this plugin at [the Marketplace](https://www.unrealengine.com/marketplace/en-US/product/shortcut-asset).
 
 ## 1. Download source code
 
