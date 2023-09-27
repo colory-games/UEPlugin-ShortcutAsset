@@ -1,6 +1,12 @@
 # Change Log
 
-## [Unreleased](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.1.0...main)
+## [Unreleased](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.2.0...main)
+
+## [Version 1.2.0](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.1.0...v1.2.0) - 2023.9.26
+
+### Updated Features
+
+* Support on Unreal Engine 5.3
 
 ## [Version 1.1.0](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.0.0...v1.1.0) - 2023.6.2
 
