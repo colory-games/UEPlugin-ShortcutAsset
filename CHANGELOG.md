@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.2.0...main)
 
-## [Version 1.2.0](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.1.0...v1.2.0) - 2023.X.XX
+## [Version 1.2.0](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.1.0...v1.2.0) - 2023.9.26
 
 ### Updated Features
 
