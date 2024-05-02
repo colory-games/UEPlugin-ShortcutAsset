@@ -151,7 +151,7 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 					TEXT("The link stored in '{0}' is missing.\nDo you want to edit the link?"), {ShortcutAsset->GetName()});
 				FText TitleText = LOCTEXT("Title", "Missing Link Error");
 				FText MessageText = FText::AsCultureInvariant(Message);
-				if (FMessageDialog::Open(EAppMsgType::OkCancel, MessageText, &TitleText) == EAppReturnType::Ok)
+				if (FMessageDialog::Open(EAppMsgType::OkCancel, MessageText, TitleText) == EAppReturnType::Ok)
 				{
 					UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 					Subsystem->OpenShortcutAssetEditor({ShortcutAsset});
