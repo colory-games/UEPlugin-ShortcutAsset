@@ -64,9 +64,15 @@ FShortcutAssetEditorToolkit::~FShortcutAssetEditorToolkit()
 	UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
 	if (Subsystem)
 	{
-		TArray<OBJECT_PTR(UObject)> ObjectsToEdit;
+		TArray<UObject*> ObjectsToEdit;
 		OwningAssetEditor->GetObjectsToEdit(ObjectsToEdit);
-		Subsystem->NotifyShortcutAssetEditorClosed(ObjectsToEdit);
+
+		TArray<OBJECT_PTR(UObject)> ObjectsToEditWithObjectPtr;
+		for (auto& O : ObjectsToEdit)
+		{
+			ObjectsToEditWithObjectPtr.Add(O);
+		}
+		Subsystem->NotifyShortcutAssetEditorClosed(ObjectsToEditWithObjectPtr);
 	}
 }
 
@@ -105,7 +111,13 @@ void FShortcutAssetEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManag
 	InTabManager->RegisterTabSpawner(TabID, FOnSpawnTab::CreateSP(this, &FShortcutAssetEditorToolkit::HandleTabManagerSpawnTab, TabID))
 		.SetDisplayName(LOCTEXT("ShortcutEditorTabName", "Shortcut Editor"))
 		.SetGroup(WorkspaceMenuCategory.ToSharedRef())
-		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
+		.SetIcon(FSlateIcon(
+#if UE_VERSION_NEWER_THAN(5, 1, 0)
+			FAppStyle::GetAppStyleSetName(), "LevelEditor.Tabs.Viewports")
+#else
+			FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports")
+#endif
+		);
 	// clang-format on
 }
 
