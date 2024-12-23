@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "IDetailsView.h"
 #include "IPropertyTypeCustomization.h"
 #include "ShortcutAsset.h"
 #include "Widgets/SCompoundWidget.h"

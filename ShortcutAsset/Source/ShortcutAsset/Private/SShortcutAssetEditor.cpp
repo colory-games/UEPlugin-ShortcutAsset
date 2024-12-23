@@ -9,7 +9,6 @@
 
 #include "SShortcutAssetEditor.h"
 
-#include "IDetailsView.h"
 #include "PropertyCustomizationHelpers.h"
 
 SShortcutAssetEditor::~SShortcutAssetEditor()
