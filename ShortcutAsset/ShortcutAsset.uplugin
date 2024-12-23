@@ -4,7 +4,7 @@
   "VersionName": "1.3.0",
   "FriendlyName": "Shortcut Asset",
   "Description": "Asset to open the linked asset/directory",
-  "EngineVersion": "5.4.0",
+  "EngineVersion": "5.5.0",
   "Category": "Other",
   "CreatedBy": "nutti (Colory Games)",
   "CreatedByURL": "https://github.com/colory-games/UEPlugin-ShortcutAssets",
