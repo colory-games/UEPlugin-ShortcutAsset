@@ -94,4 +94,4 @@ void FShortcutAssetModule::UnregisterStyles()
 	}
 }
 
-IMPLEMENT_MODULE(FShortcutAssetModule, ShortcutAssetModule);
+IMPLEMENT_MODULE(FShortcutAssetModule, ShortcutAsset);
