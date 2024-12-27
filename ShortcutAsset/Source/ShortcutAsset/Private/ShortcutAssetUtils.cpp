@@ -38,7 +38,7 @@ bool ReachFreeVersionLimitation(bool bIsCreateNew)
 	{
 		FText TitleText = LOCTEXT("Title", "Reached Free Version Limitation");
 		FText MessageText =
-			LOCTEXT("Message", "Free version can only create up to 3 assets.\nDo you want to open the marketplace of this plugin?");
+			LOCTEXT("Message", "Free version can only create up to 3 assets.\nDo you want to open the Fab page of this plugin?");
 #if UE_VERSION_OLDER_THAN(5, 4, 0)
 		if (FMessageDialog::Open(EAppMsgType::OkCancel, MessageText, &TitleText) == EAppReturnType::Ok)
 #else
