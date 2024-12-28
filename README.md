@@ -40,7 +40,7 @@ This plugin supports on the below environment.
 
 ## Installation
 
-This plugin is distributed at [the Marketplace](https://www.unrealengine.com/marketplace/en-US/product/shortcut-asset).  
+This plugin is distributed at [Fab](https://www.fab.com/ja/listings/32616e78-e6ef-4645-903b-22af25e2a1dd).  
 You can buy and install it from there.
 
 A free trial version is also available.  
@@ -49,7 +49,7 @@ The free trial version has the following limitation.
 
 * The number of assets is limited to 3.
 
-To get the benefit fully from this plugin, please consider purchasing this plugin at [the Marketplace](https://www.unrealengine.com/marketplace/en-US/product/shortcut-asset).
+To get the benefit fully from this plugin, please consider purchasing this plugin at [Fab](https://www.fab.com/ja/listings/32616e78-e6ef-4645-903b-22af25e2a1dd).
 
 ## Tutorial
 
