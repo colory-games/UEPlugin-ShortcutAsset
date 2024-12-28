@@ -11,7 +11,7 @@
   "DocsURL": "https://github.com/colory-games/UEPlugin-ShortcutAsset",
   "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/60765ae74e3c4eb9b956cef59701e80d",
   "SupportURL": "https://github.com/colory-games/UEPlugin-ShortcutAsset",
-  "CanContainContent": true,
+  "CanContainContent": false,
   "IsBetaVersion": false,
   "Installed": false,
   "Modules": [
