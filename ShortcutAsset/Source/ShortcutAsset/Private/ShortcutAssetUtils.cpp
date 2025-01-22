@@ -46,7 +46,7 @@ bool ReachFreeVersionLimitation(bool bIsCreateNew)
 #endif
 		{
 			FPlatformProcess::LaunchURL(
-				TEXT("https://forums.unrealengine.com/t/how-to-open-a-browser-from-the-game/24346/3"), NULL, NULL);
+				TEXT("https://www.fab.com/listings/32616e78-e6ef-4645-903b-22af25e2a1dd"), NULL, NULL);
 		}
 		return true;
 	}
