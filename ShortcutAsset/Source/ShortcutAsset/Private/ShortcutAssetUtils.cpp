@@ -45,8 +45,7 @@ bool ReachFreeVersionLimitation(bool bIsCreateNew)
 		if (FMessageDialog::Open(EAppMsgType::OkCancel, MessageText, TitleText) == EAppReturnType::Ok)
 #endif
 		{
-			FPlatformProcess::LaunchURL(
-				TEXT("https://www.fab.com/listings/32616e78-e6ef-4645-903b-22af25e2a1dd"), NULL, NULL);
+			FPlatformProcess::LaunchURL(TEXT("https://www.fab.com/listings/32616e78-e6ef-4645-903b-22af25e2a1dd"), NULL, NULL);
 		}
 		return true;
 	}
