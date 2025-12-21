@@ -46,3 +46,15 @@ jobs:
       - name: clang-format
         run: |
           bash tests/lint/clang-format/run.sh samples/SampleProject
+
+  crlf-check:
+    name: crlf-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Check CRLF
+        uses: erclu/check-crlf@master
+        with:
+          path: .
