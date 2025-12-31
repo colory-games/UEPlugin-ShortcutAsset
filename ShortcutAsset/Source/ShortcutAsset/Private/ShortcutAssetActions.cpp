@@ -17,18 +17,20 @@
 #include "ShortcutAssetSubsystem.h"
 #include "ShortcutAssetUtils.h"
 
+#include "ShortcutAssetFactoryNew.h"
+
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
-FShortcutAssetActions::FShortcutAssetActions()
+FShortcutAssetEditLinkActions::FShortcutAssetEditLinkActions()
 {
 }
 
-bool FShortcutAssetActions::HasActions(const TArray<UObject*>& InObjects) const
+bool FShortcutAssetEditLinkActions::HasActions(const TArray<UObject*>& InObjects) const
 {
 	return true;
 }
 
-void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
+void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
 {
 	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
 
@@ -47,7 +49,7 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 	MenuBuilder.AddMenuEntry(
 		LOCTEXT("ShortcutAsset_EditLinkedAssetPath", "Edit Link"),
 		LOCTEXT("ShortcutAsset_EditLinkedAssetPathTip", "Edit the link saved on the shortcut asset."),
-		FSlateIcon(),
+		FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
 		FUIAction(
 			FExecuteAction::CreateLambda([=]
 			{
@@ -71,7 +73,7 @@ void FShortcutAssetActions::GetActions(const TArray<UObject*>& InObjects, FMenuB
 	// clang-format on
 }
 
-void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
+void FShortcutAssetEditLinkActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
 {
 #ifdef SA_FREE_VERSION
 	if (ReachFreeVersionLimitation())
@@ -165,24 +167,83 @@ void FShortcutAssetActions::OpenAssetEditor(const TArray<UObject*>& InObjects, T
 	}
 }
 
-uint32 FShortcutAssetActions::GetCategories()
+uint32 FShortcutAssetEditLinkActions::GetCategories()
 {
 	return EAssetTypeCategories::Misc;
 }
 
-FText FShortcutAssetActions::GetName() const
+FText FShortcutAssetEditLinkActions::GetName() const
 {
 	return LOCTEXT("AssetTypeActions_Shortcut", "Shortcut");
 }
 
-UClass* FShortcutAssetActions::GetSupportedClass() const
+UClass* FShortcutAssetEditLinkActions::GetSupportedClass() const
 {
 	return UShortcutAsset::StaticClass();
 }
 
-FColor FShortcutAssetActions::GetTypeColor() const
+FColor FShortcutAssetEditLinkActions::GetTypeColor() const
 {
 	return FColor::White;
+}
+
+FUIAction MakeCreateDirectoryPathLinkAction(const FString& Path, FString PathToCreate)
+{
+	return FUIAction(
+		FExecuteAction::CreateLambda(
+			[Path, PathToCreate]()
+			{
+				IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+				UShortcutAssetFactoryNew* Factory = NewObject<UShortcutAssetFactoryNew>();
+				FString ParentPath = FPaths::GetPath(Path);
+				FString DirectoryName = FPaths::GetBaseFilename(Path);
+
+				UObject* NewAsset = AssetTools.CreateAsset(
+					FString::Printf(TEXT("%s_Shortcut"), *DirectoryName),
+					PathToCreate == "" ? ParentPath : PathToCreate,
+					UShortcutAsset::StaticClass(),
+					Factory
+				);
+				UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
+				if (NewShortcutAsset == nullptr)
+				{
+					return;
+				}
+				NewShortcutAsset->LinkType = EShortcutAssetLinkType::DirectoryPath;
+				NewShortcutAsset->LinkedDirectoryPath.Path = Path;
+			}
+		)
+	);
+}
+
+FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToCreate)
+{
+	return FUIAction(
+		FExecuteAction::CreateLambda(
+			[AssetData, PathToCreate]()
+			{
+				IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+				UShortcutAssetFactoryNew* Factory = NewObject<UShortcutAssetFactoryNew>();
+				UPackage* Package = AssetData.GetAsset()->GetOutermost();
+				FString PackagePath = FPackageName::GetLongPackagePath(Package->GetName());
+				FString AssetName = FPackageName::GetLongPackageAssetName(Package->GetName());
+
+				UObject* NewAsset = AssetTools.CreateAsset(
+					FString::Printf(TEXT("%s_Shortcut"), *AssetName),
+					PathToCreate == "" ? PackagePath : PathToCreate,
+					UShortcutAsset::StaticClass(),
+					Factory
+				);
+				UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
+				if (NewShortcutAsset == nullptr)
+				{
+					return;
+				}
+				NewShortcutAsset->LinkType = EShortcutAssetLinkType::Asset;
+				NewShortcutAsset->LinkedAsset = AssetData.GetSoftObjectPath();
+			}
+		)
+	);
 }
 
 #undef LOCTEXT_NAMESPACE

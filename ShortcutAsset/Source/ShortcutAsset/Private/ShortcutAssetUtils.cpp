@@ -14,6 +14,9 @@
 #include "Misc/MessageDialog.h"
 #include "ShortcutAsset.h"
 
+#include "ContentBrowserDataSubsystem.h"
+#include "ContentBrowserItemPath.h"
+
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
 bool ReachFreeVersionLimitation(bool bIsCreateNew)
@@ -51,6 +54,81 @@ bool ReachFreeVersionLimitation(bool bIsCreateNew)
 	}
 
 	return false;
+}
+
+bool GetObjectPathFromClipboard(const FString& Clipboard, FString& ObjectPath)
+{
+	TArray<FString> Lines;
+	Clipboard.ParseIntoArrayLines(Lines, true);
+	if (Lines.Num() != 1)
+	{
+		return false;
+	}
+
+	FString Line = Lines[0];
+	FRegexPattern Pattern(TEXT("/Script/Engine.Blueprint'(.+)'"));
+	FRegexMatcher Matcher(Pattern, Line);
+	FString Path;
+	if (Matcher.FindNext())
+	{
+		Path = Matcher.GetCaptureGroup(1);
+	}
+	else
+	{
+		return false;
+	}
+
+	FString PackageName = FPackageName::ObjectPathToPackageName(Path);
+	if (!FPackageName::IsValidLongPackageName(PackageName))
+	{
+		return false;
+	}
+
+	ObjectPath = Path;
+	return true;
+}
+
+bool GetDirectoryPathFromClipboard(const FString& Clipboard, FString& DirectoryPath)
+{
+	TArray<FString> Lines;
+	Clipboard.ParseIntoArrayLines(Lines, true);
+	if (Lines.Num() != 1)
+	{
+		return false;
+	}
+
+	FString Line = Lines[0];
+	FRegexPattern Pattern(TEXT("/Game/(.+)"));
+	FRegexMatcher Matcher(Pattern, Line);
+	FString Path;
+	if (Matcher.FindNext())
+	{
+		Path = Matcher.GetCaptureGroup(0);
+	}
+	else
+	{
+		return false;
+	}
+
+	if (!FPackageName::IsValidLongPackageName(Path))
+	{
+		return false;
+	}
+
+	UContentBrowserDataSubsystem* ContentBrowserDataSubsystem = GEditor->GetEditorSubsystem<UContentBrowserDataSubsystem>();
+	if (!ContentBrowserDataSubsystem)
+	{
+		return false;
+	}
+
+	FContentBrowserItem Item = ContentBrowserDataSubsystem->GetItemAtPath(FName(*Path), EContentBrowserItemTypeFilter::IncludeFolders);
+	if (Item.IsValid())
+	{
+		return false;
+	}
+
+	DirectoryPath = Path;
+	return true;
 }
 
 #undef LOCTEXT_NAMESPACE

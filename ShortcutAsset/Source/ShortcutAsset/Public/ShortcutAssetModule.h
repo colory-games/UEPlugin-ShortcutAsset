@@ -13,6 +13,7 @@
 #include "Modules/ModuleManager.h"
 #include "Styling/SlateStyle.h"
 
+
 class FShortcutAssetModule : public IModuleInterface
 {
 public:
@@ -23,10 +24,15 @@ public:
 private:
 	TArray<TSharedRef<IAssetTypeActions>> RegisteredAssetTypeActions;
 	TArray<TSharedRef<FSlateStyleSet>> RegisteredSlateStyleSets;
+	TArray<FDelegateHandle> RegisteredContentBrowserAssetExtenderHandles;
+	TArray<FDelegateHandle> RegisteredContentBrowserDirectoryPathExtenderHandles;
 
 	void RegisterActions();
 	void UnregisterActions();
 
 	void RegisterStyles();
 	void UnregisterStyles();
+
+	void RegisterMenus();
+	void UnregisterMenus();
 };
