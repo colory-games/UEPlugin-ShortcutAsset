@@ -18,6 +18,7 @@
 #include "ShortcutAssetUtils.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "IContentBrowserSingleton.h"
+#include "ToolMenus.h"
 
 
 void FShortcutAssetModule::StartupModule()

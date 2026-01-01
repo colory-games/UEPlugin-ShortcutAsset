@@ -240,7 +240,11 @@ FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToC
 					return;
 				}
 				NewShortcutAsset->LinkType = EShortcutAssetLinkType::Asset;
+#if UE_VERSION_NEWER_THAN(5, 1, 0)
 				NewShortcutAsset->LinkedAsset = AssetData.GetSoftObjectPath();
+#else
+				NewShortcutAsset->LinkedAsset = AssetData.ObjectPath;
+#endif
 			}
 		)
 	);
