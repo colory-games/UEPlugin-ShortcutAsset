@@ -10,3 +10,5 @@
 #pragma once
 
 bool ReachFreeVersionLimitation(bool bIsCreateNew = false);
+bool GetObjectPathFromClipboard(const FString& Clipboard, FString& ObjectPath);
+bool GetDirectoryPathFromClipboard(const FString& Clipboard, FString& DirectoryPath);

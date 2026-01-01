@@ -2,6 +2,7 @@
 
 * [Asset Shortcut](#asset-shortcut)
 * [Directory Shortcut](#directory-shortcut)
+* [Context Menu Access](#context-menu-access)
 
 ## Asset Shortcut
 
@@ -54,3 +55,19 @@ You can open a directory by opening the **Shortcut** asset.
 7. Double-click the asset, and then you can move to a linked directory.
 
   ![Access to the directory](images/access_to_directory.png)
+
+## Context Menu Access
+
+The plugin provides the context menu access to create the **Shortcut** asset.
+
+### Create Shortcut for Selected Asset/Directory
+
+You can directly create a new **Shortcut** asset from the context menu for the selected asset/directory.
+
+![Context Menu Access (Selected Asset/Directory)](images/context_menu_access_selected_asset.png)
+
+### Create Shortcut from Clipboard
+
+You can create a new **Shortcut** asset of a copied asset on the Clipboard.
+
+![Context Menu Access (Clipboard)](images/context_menu_access_clipboard.png)

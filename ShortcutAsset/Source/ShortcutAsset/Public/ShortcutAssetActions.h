@@ -11,10 +11,10 @@
 
 #include "AssetTypeActions_Base.h"
 
-class FShortcutAssetActions : public FAssetTypeActions_Base
+class FShortcutAssetEditLinkActions : public FAssetTypeActions_Base
 {
 public:
-	FShortcutAssetActions();
+	FShortcutAssetEditLinkActions();
 
 	virtual bool HasActions(const TArray<UObject*>& InObjects) const override;
 
@@ -31,3 +31,6 @@ public:
 
 	virtual FColor GetTypeColor() const override;
 };
+
+FUIAction MakeCreateDirectoryPathLinkAction(const FString& Path, FString PathToCreate = "");
+FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToCreate = "");
