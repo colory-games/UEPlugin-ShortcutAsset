@@ -111,84 +111,78 @@ void FShortcutAssetModule::RegisterMenus()
 {
 	FToolMenuOwnerScoped Owner(this);
 
-	FContentBrowserModule& ContentBrowserModule =
-		FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+	FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
 
 	UToolMenu* ContextMenu = UToolMenus::Get()->ExtendMenu("ContentBrowser.AddNewContextMenu");
 	FToolMenuSection& ContextMenuSection = ContextMenu->FindOrAddSection("ContentBrowserNewAsset");
-	ContextMenuSection.AddDynamicEntry(
-		"Shortcut",
-		FNewToolMenuSectionDelegate::CreateLambda(
-			[](FToolMenuSection& InSection)
+	ContextMenuSection.AddDynamicEntry("Shortcut", FNewToolMenuSectionDelegate::CreateLambda([](FToolMenuSection& InSection) {
+		FString Clipboard;
+		FPlatformApplicationMisc::ClipboardPaste(Clipboard);
+
+		EShortcutAssetLinkType LinkType = EShortcutAssetLinkType::MAX;
+		FString Path;
+		if (GetObjectPathFromClipboard(Clipboard, Path))
+		{
+			LinkType = EShortcutAssetLinkType::Asset;
+		}
+		else if (GetDirectoryPathFromClipboard(Clipboard, Path))
+		{
+			LinkType = EShortcutAssetLinkType::DirectoryPath;
+		}
+		else
+		{
+			return;
+		}
+
+		FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+		IContentBrowserSingleton& ContentBrowserSingleton = ContentBrowserModule.Get();
+		TArray<FString> CurrentPaths;
+		ContentBrowserSingleton.GetSelectedPathViewFolders(CurrentPaths);
+		if (CurrentPaths.Num() != 1)
+		{
+			return;
+		}
+
+		FString CurrentPath = CurrentPaths[0];
+		if (CurrentPath.StartsWith("/All/Game"))
+		{
+			CurrentPath = CurrentPath.Replace(TEXT("/All/Game"), TEXT("/Game"));
+		}
+
+		switch (LinkType)
+		{
+			case EShortcutAssetLinkType::Asset:
 			{
-				FString Clipboard;
-				FPlatformApplicationMisc::ClipboardPaste(Clipboard);
+				FAssetRegistryModule& AssetRegistryModule =
+					FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+				FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FText::FromString(Path));
+				FString PackageName = FPackageName::ObjectPathToPackageName(Path);
+				FString AssetName = FPackageName::GetLongPackageAssetName(AssetData.GetAsset()->GetOutermost()->GetName());
 
-				EShortcutAssetLinkType LinkType = EShortcutAssetLinkType::MAX;
-				FString Path;
-				if (GetObjectPathFromClipboard(Clipboard, Path))
-				{
-					LinkType = EShortcutAssetLinkType::Asset;
-				}
-				else if (GetDirectoryPathFromClipboard(Clipboard, Path))
-				{
-					LinkType = EShortcutAssetLinkType::DirectoryPath;
-				}
-				else
-				{
-					return;
-				}
-
-				FContentBrowserModule& ContentBrowserModule =
-					FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
-				IContentBrowserSingleton& ContentBrowserSingleton = ContentBrowserModule.Get();
-				TArray<FString> CurrentPaths;
-				ContentBrowserSingleton.GetSelectedPathViewFolders(CurrentPaths);
-				if (CurrentPaths.Num() != 1)
-				{
-					return;
-				}
-
-				FString CurrentPath = CurrentPaths[0];
-				if (CurrentPath.StartsWith("/All/Game"))
-				{
-					CurrentPath = CurrentPath.Replace(TEXT("/All/Game"), TEXT("/Game"));
-				}
-
-				switch (LinkType)
-				{
-				case EShortcutAssetLinkType::Asset:
-				{
-					FAssetRegistryModule& AssetRegistryModule =
-						FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-					FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(Path);
-					FString PackageName = FPackageName::ObjectPathToPackageName(Path);
-					FString AssetName = FPackageName::GetLongPackageAssetName(AssetData.GetAsset()->GetOutermost()->GetName());
-
-					InSection.AddMenuEntry(
-						"Shortcut",
-						FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *AssetName)),
-						FText::FromString(FString::Printf(TEXT("Create an asset link to %s."), *AssetName)),
-						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-						MakeCreateAssetLinkAction(AssetData, CurrentPath)
-					);
-					break;
-				}
-				case EShortcutAssetLinkType::DirectoryPath:
-				{
-					InSection.AddMenuEntry(
-						"Shortcut",
-						FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *Path)),
-						FText::FromString(FString::Printf(TEXT("Create an asset link to %s."), *Path)),
-						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-						MakeCreateDirectoryPathLinkAction(Path, CurrentPath)
-					);
-					break;
-				}
-				default:
-					break;
-				}
+				InSection.AddMenuEntry(
+					"Shortcut",
+					FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *AssetName)),
+					FText::FromString(FString::Printf(TEXT("Create an asset link to %s."), *AssetName)),
+					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+					MakeCreateAssetLinkAction(AssetData, CurrentPath)
+				);
+				break;
 			}
+			case EShortcutAssetLinkType::DirectoryPath:
+			{
+				InSection.AddMenuEntry(
+					"Shortcut",
+					FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *Path)),
+					FText::FromString(FString::Printf(TEXT("Create an asset link to %s."), *Path)),
+					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+					MakeCreateDirectoryPathLinkAction(Path, CurrentPath)
+				);
+				break;
+			}
+			default:
+				break;
+		}
+	}
 		)
 	);
 

@@ -15,7 +15,11 @@
 #include "ShortcutAsset.h"
 
 #include "ContentBrowserDataSubsystem.h"
+
+#if UE_VERSION_NEWER_THAN(5, 0, 0)
 #include "ContentBrowserItemPath.h"
+#endif
+#include "Internationalization/Regex.h"
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
