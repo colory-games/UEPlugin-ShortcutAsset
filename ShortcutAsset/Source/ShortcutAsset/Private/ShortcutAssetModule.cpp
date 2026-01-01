@@ -155,7 +155,7 @@ void FShortcutAssetModule::RegisterMenus()
 			{
 				FAssetRegistryModule& AssetRegistryModule =
 					FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-				FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FName(*Path.ToString()));
+				FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FName(*Path));
 				FString PackageName = FPackageName::ObjectPathToPackageName(Path);
 				FString AssetName = FPackageName::GetLongPackageAssetName(AssetData.GetAsset()->GetOutermost()->GetName());
 
@@ -168,7 +168,8 @@ void FShortcutAssetModule::RegisterMenus()
 			{
 				InSection.AddMenuEntry("Shortcut", FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *Path)),
 					FText::FromString(FString::Printf(TEXT("Create an asset link to %s."), *Path)),
-					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"), MakeCreateDirectoryPathLinkAction(Path, CurrentPath));
+					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+					MakeCreateDirectoryPathLinkAction(Path, CurrentPath));
 				break;
 			}
 			default:
@@ -180,107 +181,80 @@ void FShortcutAssetModule::RegisterMenus()
 		FContentBrowserMenuExtender_SelectedPaths::CreateLambda([](const TArray<FString>& SelectedPaths) {
 			TSharedRef<FExtender> Extender = MakeShared<FExtender>();
 
-			Extender->AddMenuExtension(
-				"PathViewFolderOptions",
-				EExtensionHook::Before,
-				nullptr,
-				FMenuExtensionDelegate::CreateLambda(
-					[SelectedPaths](FMenuBuilder& MenuBuilder)
+			Extender->AddMenuExtension("PathViewFolderOptions", EExtensionHook::Before, nullptr,
+				FMenuExtensionDelegate::CreateLambda([SelectedPaths](FMenuBuilder& MenuBuilder) {
+					if (SelectedPaths.Num() != 1)
 					{
-						if (SelectedPaths.Num() != 1)
-						{
-							return;
-						}
-
-						FString Path = SelectedPaths[0];
-
-						MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
-						MenuBuilder.AddMenuEntry(
-							FText::FromString("Create Shortcut"),
-							FText::FromString("Create a directory shortcut."),
-							FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-							MakeCreateDirectoryPathLinkAction(Path)
-						);
-						MenuBuilder.EndSection();
+						return;
 					}
-				)
-			);
+
+					FString Path = SelectedPaths[0];
+
+					MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
+					MenuBuilder.AddMenuEntry(FText::FromString("Create Shortcut"),
+						FText::FromString("Create a directory shortcut."),
+						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"), MakeCreateDirectoryPathLinkAction(Path)
+					);
+					MenuBuilder.EndSection();
+				}));
 
 			return Extender;
-		}
-	);
+		});
 	ContentBrowserModule.GetAllPathViewContextMenuExtenders().Add(PathExtender);
 	RegisteredContentBrowserDirectoryPathExtenderHandles.Add(PathExtender.GetHandle());
 
 	FContentBrowserMenuExtender_SelectedAssets AssetExtender =
-		FContentBrowserMenuExtender_SelectedAssets::CreateLambda(
-			[](const TArray<FAssetData>& SelectedAssets)
-			{
-				TSharedRef<FExtender> Extender = MakeShared<FExtender>();
+		FContentBrowserMenuExtender_SelectedAssets::CreateLambda([](const TArray<FAssetData>& SelectedAssets) {
+			TSharedRef<FExtender> Extender = MakeShared<FExtender>();
 
-				Extender->AddMenuExtension(
-					"GetAssetActions",
-					EExtensionHook::After,
-					nullptr,
-					FMenuExtensionDelegate::CreateLambda(
-						[SelectedAssets](FMenuBuilder& MenuBuilder)
-						{
-							if (SelectedAssets.Num() != 1)
-							{
-								return;
-							}
+			Extender->AddMenuExtension("GetAssetActions", EExtensionHook::After, nullptr,
+				FMenuExtensionDelegate::CreateLambda([SelectedAssets](FMenuBuilder& MenuBuilder) {
+					if (SelectedAssets.Num() != 1)
+					{
+						return;
+					}
 
-							FAssetData AssetData = SelectedAssets[0];
-							UObject* Asset = SelectedAssets[0].GetAsset();
-							auto ShortcutAsset = Cast<UShortcutAsset>(Asset);
-							if (ShortcutAsset != nullptr)
-							{
-								return;
-							}
+					FAssetData AssetData = SelectedAssets[0];
+					UObject* Asset = SelectedAssets[0].GetAsset();
+					auto ShortcutAsset = Cast<UShortcutAsset>(Asset);
+					if (ShortcutAsset != nullptr)
+					{
+						return;
+					}
 
-							MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
-							MenuBuilder.AddMenuEntry(
-								FText::FromString("Create Shortcut"),
-								FText::FromString("Create an asset shortcut."),
-								FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-								MakeCreateAssetLinkAction(AssetData)
-							);
-							MenuBuilder.EndSection();
-						}
-					)
-				);
+					MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
+					MenuBuilder.AddMenuEntry(
+						FText::FromString("Create Shortcut"),
+						FText::FromString("Create an asset shortcut."),
+						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+						MakeCreateAssetLinkAction(AssetData)
+					);
+					MenuBuilder.EndSection();
+				}));
 
-				return Extender;
-			}
-		);
+			return Extender;
+		});
 	ContentBrowserModule.GetAllAssetViewContextMenuExtenders().Add(AssetExtender);
 	RegisteredContentBrowserAssetExtenderHandles.Add(AssetExtender.GetHandle());
 }
 
 void FShortcutAssetModule::UnregisterMenus()
 {
-	FContentBrowserModule& ContentBrowserModule =
-		FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+	FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
 
 	for (auto ExtenderHandle : RegisteredContentBrowserAssetExtenderHandles)
 	{
 		ContentBrowserModule.GetAllAssetViewContextMenuExtenders().RemoveAll(
-			[ExtenderHandle](const FContentBrowserMenuExtender_SelectedAssets& InDelegate)
-			{
-				return InDelegate.GetHandle() == ExtenderHandle;
-			}
-		);
+			[ExtenderHandle](
+				const FContentBrowserMenuExtender_SelectedAssets& InDelegate) { return InDelegate.GetHandle() == ExtenderHandle; });
 	}
 	RegisteredContentBrowserAssetExtenderHandles.Empty();
 
 	for (auto ExtenderHandle : RegisteredContentBrowserDirectoryPathExtenderHandles)
 	{
 		ContentBrowserModule.GetAllPathViewContextMenuExtenders().RemoveAll(
-			[ExtenderHandle](const FContentBrowserMenuExtender_SelectedPaths& InDelegate)
-			{
-				return InDelegate.GetHandle() == ExtenderHandle;
-			}
-		);
+			[ExtenderHandle](
+				const FContentBrowserMenuExtender_SelectedPaths& InDelegate){ return InDelegate.GetHandle() == ExtenderHandle; });
 	}
 	RegisteredContentBrowserDirectoryPathExtenderHandles.Empty();
 

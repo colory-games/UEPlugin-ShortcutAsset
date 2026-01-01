@@ -14,10 +14,9 @@
 #include "IContentBrowserSingleton.h"
 #include "ShortcutAsset.h"
 #include "ShortcutAssetEditorToolkit.h"
+#include "ShortcutAssetFactoryNew.h"
 #include "ShortcutAssetSubsystem.h"
 #include "ShortcutAssetUtils.h"
-
-#include "ShortcutAssetFactoryNew.h"
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
@@ -73,7 +72,8 @@ void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects
 	// clang-format on
 }
 
-void FShortcutAssetEditLinkActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
+void FShortcutAssetEditLinkActions::OpenAssetEditor(
+	const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
 {
 #ifdef SA_FREE_VERSION
 	if (ReachFreeVersionLimitation())
@@ -189,65 +189,51 @@ FColor FShortcutAssetEditLinkActions::GetTypeColor() const
 
 FUIAction MakeCreateDirectoryPathLinkAction(const FString& Path, FString PathToCreate)
 {
-	return FUIAction(
-		FExecuteAction::CreateLambda(
-			[Path, PathToCreate]()
-			{
-				IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-				UShortcutAssetFactoryNew* Factory = NewObject<UShortcutAssetFactoryNew>();
-				FString ParentPath = FPaths::GetPath(Path);
-				FString DirectoryName = FPaths::GetBaseFilename(Path);
+	return FUIAction(FExecuteAction::CreateLambda([Path, PathToCreate]() {
+		IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+		UShortcutAssetFactoryNew* Factory = NewObject<UShortcutAssetFactoryNew>();
+		FString ParentPath = FPaths::GetPath(Path);
+		FString DirectoryName = FPaths::GetBaseFilename(Path);
 
-				UObject* NewAsset = AssetTools.CreateAsset(
-					FString::Printf(TEXT("%s_Shortcut"), *DirectoryName),
-					PathToCreate == "" ? ParentPath : PathToCreate,
-					UShortcutAsset::StaticClass(),
-					Factory
-				);
-				UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
-				if (NewShortcutAsset == nullptr)
-				{
-					return;
-				}
-				NewShortcutAsset->LinkType = EShortcutAssetLinkType::DirectoryPath;
-				NewShortcutAsset->LinkedDirectoryPath.Path = Path;
-			}
-		)
-	);
+		UObject* NewAsset = AssetTools.CreateAsset(FString::Printf(TEXT("%s_Shortcut"), *DirectoryName),
+			PathToCreate == "" ? ParentPath : PathToCreate, UShortcutAsset::StaticClass(), Factory);
+		UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
+		if (NewShortcutAsset == nullptr)
+		{
+			return;
+		}
+		NewShortcutAsset->LinkType = EShortcutAssetLinkType::DirectoryPath;
+		NewShortcutAsset->LinkedDirectoryPath.Path = Path;
+	}));
 }
 
 FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToCreate)
 {
-	return FUIAction(
-		FExecuteAction::CreateLambda(
-			[AssetData, PathToCreate]()
-			{
-				IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-				UShortcutAssetFactoryNew* Factory = NewObject<UShortcutAssetFactoryNew>();
-				UPackage* Package = AssetData.GetAsset()->GetOutermost();
-				FString PackagePath = FPackageName::GetLongPackagePath(Package->GetName());
-				FString AssetName = FPackageName::GetLongPackageAssetName(Package->GetName());
+	return FUIAction(FExecuteAction::CreateLambda([AssetData, PathToCreate]() {
+		IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+		UShortcutAssetFactoryNew* Factory = NewObject<UShortcutAssetFactoryNew>();
+		UPackage* Package = AssetData.GetAsset()->GetOutermost();
+		FString PackagePath = FPackageName::GetLongPackagePath(Package->GetName());
+		FString AssetName = FPackageName::GetLongPackageAssetName(Package->GetName());
 
-				UObject* NewAsset = AssetTools.CreateAsset(
-					FString::Printf(TEXT("%s_Shortcut"), *AssetName),
-					PathToCreate == "" ? PackagePath : PathToCreate,
-					UShortcutAsset::StaticClass(),
-					Factory
-				);
-				UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
-				if (NewShortcutAsset == nullptr)
-				{
-					return;
-				}
-				NewShortcutAsset->LinkType = EShortcutAssetLinkType::Asset;
+		UObject* NewAsset = AssetTools.CreateAsset(
+			FString::Printf(TEXT("%s_Shortcut"), *AssetName),
+			PathToCreate == "" ? PackagePath : PathToCreate,
+			UShortcutAsset::StaticClass(),
+			Factory
+		);
+		UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
+		if (NewShortcutAsset == nullptr)
+		{
+			return;
+		}
+		NewShortcutAsset->LinkType = EShortcutAssetLinkType::Asset;
 #if UE_VERSION_NEWER_THAN(5, 1, 0)
-				NewShortcutAsset->LinkedAsset = AssetData.GetSoftObjectPath();
+		NewShortcutAsset->LinkedAsset = AssetData.GetSoftObjectPath();
 #else
-				NewShortcutAsset->LinkedAsset = AssetData.ObjectPath;
+		NewShortcutAsset->LinkedAsset = AssetData.ObjectPath;
 #endif
-			}
-		)
-	);
+	}));
 }
 
 #undef LOCTEXT_NAMESPACE
