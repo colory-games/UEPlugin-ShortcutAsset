@@ -191,8 +191,7 @@ void FShortcutAssetModule::RegisterMenus()
 					MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
 					MenuBuilder.AddMenuEntry(FText::FromString("Create Shortcut"),
 						FText::FromString("Create a directory shortcut."),
-						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"), MakeCreateDirectoryPathLinkAction(Path)
-					);
+						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"), MakeCreateDirectoryPathLinkAction(Path));
 					MenuBuilder.EndSection();
 				}));
 
@@ -221,12 +220,8 @@ void FShortcutAssetModule::RegisterMenus()
 					}
 
 					MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
-					MenuBuilder.AddMenuEntry(
-						FText::FromString("Create Shortcut"),
-						FText::FromString("Create an asset shortcut."),
-						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-						MakeCreateAssetLinkAction(AssetData)
-					);
+					MenuBuilder.AddMenuEntry(FText::FromString("Create Shortcut"), FText::FromString("Create an asset shortcut."),
+						FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"), MakeCreateAssetLinkAction(AssetData));
 					MenuBuilder.EndSection();
 				}));
 
@@ -252,7 +247,7 @@ void FShortcutAssetModule::UnregisterMenus()
 	{
 		ContentBrowserModule.GetAllPathViewContextMenuExtenders().RemoveAll(
 			[ExtenderHandle](
-				const FContentBrowserMenuExtender_SelectedPaths& InDelegate){ return InDelegate.GetHandle() == ExtenderHandle; });
+				const FContentBrowserMenuExtender_SelectedPaths& InDelegate) { return InDelegate.GetHandle() == ExtenderHandle; });
 	}
 	RegisteredContentBrowserDirectoryPathExtenderHandles.Empty();
 

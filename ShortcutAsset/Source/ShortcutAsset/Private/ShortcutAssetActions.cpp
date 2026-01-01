@@ -216,12 +216,8 @@ FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToC
 		FString PackagePath = FPackageName::GetLongPackagePath(Package->GetName());
 		FString AssetName = FPackageName::GetLongPackageAssetName(Package->GetName());
 
-		UObject* NewAsset = AssetTools.CreateAsset(
-			FString::Printf(TEXT("%s_Shortcut"), *AssetName),
-			PathToCreate == "" ? PackagePath : PathToCreate,
-			UShortcutAsset::StaticClass(),
-			Factory
-		);
+		UObject* NewAsset = AssetTools.CreateAsset(FString::Printf(TEXT("%s_Shortcut"), *AssetName),
+			PathToCreate == "" ? PackagePath : PathToCreate, UShortcutAsset::StaticClass(), Factory);
 		UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
 		if (NewShortcutAsset == nullptr)
 		{
