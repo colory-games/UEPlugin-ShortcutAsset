@@ -19,8 +19,6 @@
 #include "Styling/SlateStyleRegistry.h"
 #include "ToolMenus.h"
 
-#include "Editor.h"
-
 void FShortcutAssetModule::StartupModule()
 {
 	RegisterActions();

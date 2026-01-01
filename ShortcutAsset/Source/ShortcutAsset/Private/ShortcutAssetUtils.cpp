@@ -19,6 +19,8 @@
 #include "ContentBrowserItemPath.h"
 #endif
 
+#include "Editor.h"
+
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
 bool ReachFreeVersionLimitation(bool bIsCreateNew)
