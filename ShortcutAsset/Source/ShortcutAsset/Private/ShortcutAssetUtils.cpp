@@ -10,16 +10,14 @@
 #include "ShortcutAssetUtils.h"
 
 #include "AssetRegistry/AssetRegistryModule.h"
+#include "ContentBrowserDataSubsystem.h"
+#include "Internationalization/Regex.h"
 #include "Misc/EngineVersionComparison.h"
 #include "Misc/MessageDialog.h"
 #include "ShortcutAsset.h"
-
-#include "ContentBrowserDataSubsystem.h"
-
 #if UE_VERSION_NEWER_THAN(5, 0, 0)
 #include "ContentBrowserItemPath.h"
 #endif
-#include "Internationalization/Regex.h"
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
@@ -125,7 +123,8 @@ bool GetDirectoryPathFromClipboard(const FString& Clipboard, FString& DirectoryP
 		return false;
 	}
 
-	FContentBrowserItem Item = ContentBrowserDataSubsystem->GetItemAtPath(FName(*Path), EContentBrowserItemTypeFilter::IncludeFolders);
+	FContentBrowserItem Item =
+		ContentBrowserDataSubsystem->GetItemAtPath(FName(*Path), EContentBrowserItemTypeFilter::IncludeFolders);
 	if (Item.IsValid())
 	{
 		return false;

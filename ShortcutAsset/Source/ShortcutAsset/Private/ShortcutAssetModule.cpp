@@ -9,17 +9,17 @@
 
 #include "ShortcutAssetModule.h"
 
-#include "ShortcutAssetActions.h"
-#include "Styling/SlateStyleRegistry.h"
-#include "ContentBrowserModule.h"
-
-#include "ShortcutAsset.h"
-#include "HAL/PlatformApplicationMisc.h"
-#include "ShortcutAssetUtils.h"
 #include "AssetRegistry/AssetRegistryModule.h"
+#include "ContentBrowserModule.h"
+#include "HAL/PlatformApplicationMisc.h"
 #include "IContentBrowserSingleton.h"
+#include "ShortcutAsset.h"
+#include "ShortcutAssetActions.h"
+#include "ShortcutAssetUtils.h"
+#include "Styling/SlateStyleRegistry.h"
 #include "ToolMenus.h"
 
+#include "Editor.h"
 
 void FShortcutAssetModule::StartupModule()
 {
@@ -155,72 +155,60 @@ void FShortcutAssetModule::RegisterMenus()
 			{
 				FAssetRegistryModule& AssetRegistryModule =
 					FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-				FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FText::FromString(Path));
+				FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FName(*Path.ToString()));
 				FString PackageName = FPackageName::ObjectPathToPackageName(Path);
 				FString AssetName = FPackageName::GetLongPackageAssetName(AssetData.GetAsset()->GetOutermost()->GetName());
 
-				InSection.AddMenuEntry(
-					"Shortcut",
-					FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *AssetName)),
+				InSection.AddMenuEntry("Shortcut", FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *AssetName)),
 					FText::FromString(FString::Printf(TEXT("Create an asset link to %s."), *AssetName)),
-					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-					MakeCreateAssetLinkAction(AssetData, CurrentPath)
-				);
+					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"), MakeCreateAssetLinkAction(AssetData, CurrentPath));
 				break;
 			}
 			case EShortcutAssetLinkType::DirectoryPath:
 			{
-				InSection.AddMenuEntry(
-					"Shortcut",
-					FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *Path)),
+				InSection.AddMenuEntry("Shortcut", FText::FromString(FString::Printf(TEXT("Shortcut to %s"), *Path)),
 					FText::FromString(FString::Printf(TEXT("Create an asset link to %s."), *Path)),
-					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-					MakeCreateDirectoryPathLinkAction(Path, CurrentPath)
-				);
+					FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"), MakeCreateDirectoryPathLinkAction(Path, CurrentPath));
 				break;
 			}
 			default:
 				break;
 		}
-	}
-		)
-	);
+	}));
 
 	FContentBrowserMenuExtender_SelectedPaths PathExtender =
-		FContentBrowserMenuExtender_SelectedPaths::CreateLambda(
-			[](const TArray<FString>& SelectedPaths)
-			{
-				TSharedRef<FExtender> Extender = MakeShared<FExtender>();
+		FContentBrowserMenuExtender_SelectedPaths::CreateLambda([](const TArray<FString>& SelectedPaths) {
+			TSharedRef<FExtender> Extender = MakeShared<FExtender>();
 
-				Extender->AddMenuExtension(
-					"PathViewFolderOptions",
-					EExtensionHook::Before,
-					nullptr,
-					FMenuExtensionDelegate::CreateLambda(
-						[SelectedPaths](FMenuBuilder& MenuBuilder)
+			Extender->AddMenuExtension(
+				"PathViewFolderOptions",
+				EExtensionHook::Before,
+				nullptr,
+				FMenuExtensionDelegate::CreateLambda(
+					[SelectedPaths](FMenuBuilder& MenuBuilder)
+					{
+						if (SelectedPaths.Num() != 1)
 						{
-							if (SelectedPaths.Num() != 1)
-							{
-								return;
-							}
-
-							FString Path = SelectedPaths[0];
-
-							MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
-							MenuBuilder.AddMenuEntry(
-								FText::FromString("Create Shortcut"),
-								FText::FromString("Create a directory shortcut."),
-								FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
-								MakeCreateDirectoryPathLinkAction(Path)
-							);
-							MenuBuilder.EndSection();
+							return;
 						}
-					)
-				);
 
-				return Extender;
-			}
-		);
+						FString Path = SelectedPaths[0];
+
+						MenuBuilder.BeginSection("ShortcutActionSession", FText::FromString("Shortcut Action"));
+						MenuBuilder.AddMenuEntry(
+							FText::FromString("Create Shortcut"),
+							FText::FromString("Create a directory shortcut."),
+							FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+							MakeCreateDirectoryPathLinkAction(Path)
+						);
+						MenuBuilder.EndSection();
+					}
+				)
+			);
+
+			return Extender;
+		}
+	);
 	ContentBrowserModule.GetAllPathViewContextMenuExtenders().Add(PathExtender);
 	RegisteredContentBrowserDirectoryPathExtenderHandles.Add(PathExtender.GetHandle());
 

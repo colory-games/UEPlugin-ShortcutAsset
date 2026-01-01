@@ -13,7 +13,6 @@
 #include "Modules/ModuleManager.h"
 #include "Styling/SlateStyle.h"
 
-
 class FShortcutAssetModule : public IModuleInterface
 {
 public:

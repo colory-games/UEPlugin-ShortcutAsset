@@ -23,14 +23,14 @@ public class ShortcutAsset : ModuleRules
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]{
-            "ApplicationCore",
+			"ApplicationCore",
 			"AssetRegistry",
 			"EditorStyle",
 			"EditorSubsystem",
 			"SlateCore",
 			"Slate",
-            "ToolMenus",
-            "PropertyEditor",
+			"ToolMenus",
+			"PropertyEditor",
 			"ContentBrowser",
 			"ContentBrowserData",
 		});
