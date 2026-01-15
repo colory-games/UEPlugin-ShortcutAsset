@@ -197,7 +197,8 @@ FUIAction MakeCreateDirectoryPathLinkAction(const FString& Path, FString PathToC
 		FString DirectoryPathToCreate = PathToCreate == "" ? ParentPath : PathToCreate;
 		FString AssetNameToCreate = FString::Printf(TEXT("%s_Shortcut"), *DirectoryName);
 
-		UObject* NewAsset = AssetTools.CreateAsset(AssetNameToCreate, DirectoryPathToCreate, UShortcutAsset::StaticClass(), Factory);
+		UObject* NewAsset =
+			AssetTools.CreateAsset(AssetNameToCreate, DirectoryPathToCreate, UShortcutAsset::StaticClass(), Factory);
 		UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
 		if (NewShortcutAsset == nullptr)
 		{
@@ -209,7 +210,7 @@ FUIAction MakeCreateDirectoryPathLinkAction(const FString& Path, FString PathToC
 		// Move to the folder which the asset is created.
 		FContentBrowserModule& ContentBrowserModule =
 			FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
-		ContentBrowserModule.Get().SyncBrowserToFolders({ DirectoryPathToCreate }, false, false);
+		ContentBrowserModule.Get().SyncBrowserToFolders({DirectoryPathToCreate}, false, false);
 	}));
 }
 
@@ -224,7 +225,8 @@ FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToC
 		FString DirectoryPathToCreate = PathToCreate == "" ? PackagePath : PathToCreate;
 		FString AssetNameToCreate = FString::Printf(TEXT("%s_Shortcut"), *AssetName);
 
-		UObject* NewAsset = AssetTools.CreateAsset(AssetNameToCreate, DirectoryPathToCreate, UShortcutAsset::StaticClass(), Factory);
+		UObject* NewAsset =
+			AssetTools.CreateAsset(AssetNameToCreate, DirectoryPathToCreate, UShortcutAsset::StaticClass(), Factory);
 		UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
 		if (NewShortcutAsset == nullptr)
 		{
@@ -240,7 +242,7 @@ FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToC
 		// Move to the folder which the asset is created.
 		FContentBrowserModule& ContentBrowserModule =
 			FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
-		ContentBrowserModule.Get().SyncBrowserToFolders({ DirectoryPathToCreate }, false, false);
+		ContentBrowserModule.Get().SyncBrowserToFolders({DirectoryPathToCreate}, false, false);
 	}));
 }
 
