@@ -194,9 +194,10 @@ FUIAction MakeCreateDirectoryPathLinkAction(const FString& Path, FString PathToC
 		UShortcutAssetFactoryNew* Factory = NewObject<UShortcutAssetFactoryNew>();
 		FString ParentPath = FPaths::GetPath(Path);
 		FString DirectoryName = FPaths::GetBaseFilename(Path);
+		FString DirectoryPathToCreate = PathToCreate == "" ? ParentPath : PathToCreate;
+		FString AssetNameToCreate = FString::Printf(TEXT("%s_Shortcut"), *DirectoryName);
 
-		UObject* NewAsset = AssetTools.CreateAsset(FString::Printf(TEXT("%s_Shortcut"), *DirectoryName),
-			PathToCreate == "" ? ParentPath : PathToCreate, UShortcutAsset::StaticClass(), Factory);
+		UObject* NewAsset = AssetTools.CreateAsset(AssetNameToCreate, DirectoryPathToCreate, UShortcutAsset::StaticClass(), Factory);
 		UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
 		if (NewShortcutAsset == nullptr)
 		{
@@ -204,6 +205,11 @@ FUIAction MakeCreateDirectoryPathLinkAction(const FString& Path, FString PathToC
 		}
 		NewShortcutAsset->LinkType = EShortcutAssetLinkType::DirectoryPath;
 		NewShortcutAsset->LinkedDirectoryPath.Path = Path;
+
+		// Move to the folder which the asset is created.
+		FContentBrowserModule& ContentBrowserModule =
+			FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+		ContentBrowserModule.Get().SyncBrowserToFolders({ DirectoryPathToCreate }, false, false);
 	}));
 }
 
@@ -215,9 +221,10 @@ FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToC
 		UPackage* Package = AssetData.GetAsset()->GetOutermost();
 		FString PackagePath = FPackageName::GetLongPackagePath(Package->GetName());
 		FString AssetName = FPackageName::GetLongPackageAssetName(Package->GetName());
+		FString DirectoryPathToCreate = PathToCreate == "" ? PackagePath : PathToCreate;
+		FString AssetNameToCreate = FString::Printf(TEXT("%s_Shortcut"), *AssetName);
 
-		UObject* NewAsset = AssetTools.CreateAsset(FString::Printf(TEXT("%s_Shortcut"), *AssetName),
-			PathToCreate == "" ? PackagePath : PathToCreate, UShortcutAsset::StaticClass(), Factory);
+		UObject* NewAsset = AssetTools.CreateAsset(AssetNameToCreate, DirectoryPathToCreate, UShortcutAsset::StaticClass(), Factory);
 		UShortcutAsset* NewShortcutAsset = Cast<UShortcutAsset>(NewAsset);
 		if (NewShortcutAsset == nullptr)
 		{
@@ -229,6 +236,11 @@ FUIAction MakeCreateAssetLinkAction(const FAssetData& AssetData, FString PathToC
 #else
 		NewShortcutAsset->LinkedAsset = AssetData.ObjectPath;
 #endif
+
+		// Move to the folder which the asset is created.
+		FContentBrowserModule& ContentBrowserModule =
+			FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+		ContentBrowserModule.Get().SyncBrowserToFolders({ DirectoryPathToCreate }, false, false);
 	}));
 }
 
