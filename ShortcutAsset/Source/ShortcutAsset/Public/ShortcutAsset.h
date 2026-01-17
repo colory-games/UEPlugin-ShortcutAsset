@@ -45,4 +45,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Link Property",
 		meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::DirectoryPath"))
 	FDirectoryPath LinkedDirectoryPath;
+
+	virtual void GetAssetRegistryTags(FAssetRegistryTagsContext Context) const override;
 };
