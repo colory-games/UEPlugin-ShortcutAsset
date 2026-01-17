@@ -69,7 +69,6 @@ void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects
 			})
 		)
 	);
-	// clang-format on
 
 	if (ShortcutAsset->LinkType == EShortcutAssetLinkType::Asset)
 	{
@@ -179,6 +178,7 @@ void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects
 			)
 		);
 	}
+	// clang-format on
 }
 
 void FShortcutAssetEditLinkActions::OpenAssetEditor(
