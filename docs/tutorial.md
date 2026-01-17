@@ -71,3 +71,22 @@ You can directly create a new **Shortcut** asset from the context menu for the s
 You can create a new **Shortcut** asset of a copied asset on the Clipboard.
 
 ![Context Menu Access (Clipboard)](images/context_menu_access_clipboard.png)
+
+### Open Asset/Directory Location
+
+Open directory where linked asset/directory is located.
+
+![Context Menu Access (Open Asset/Directory Location)](images/context_menu_open_asset_directory_location.png)
+
+### Open Asset/Directory Location in New Window
+
+Open directory where linked asset/directory is located.
+New contents browser window will be opened.
+
+![Context Menu Access (Open Asset/Directory Location in New Window)](images/context_menu_open_asset_directory_location_in_new_window.png)
+
+### Open Linked Directory in New Window
+
+If the [Link Type] is [Directory Path], open linked directory in new window.
+
+![Context Menu Access (Open Linked Directory in New Window)](images/context_menu_open_linked_directory_in_new_window.png)
