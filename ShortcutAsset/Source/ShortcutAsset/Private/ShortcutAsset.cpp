@@ -17,13 +17,11 @@ void UShortcutAsset::GetAssetRegistryTags(FAssetRegistryTagsContext Context) con
 {
 	Super::GetAssetRegistryTags(Context);
 
-	Context.AddTag(FAssetRegistryTag(
-		TEXT("LinkType"),
+	Context.AddTag(FAssetRegistryTag(TEXT("LinkType"),
 		LinkType == EShortcutAssetLinkType::Asset
 			? TEXT("Asset")
 			: LinkType == EShortcutAssetLinkType::DirectoryPath ? TEXT("Directory Path") : TEXT("Unknown"),
-		FAssetRegistryTag::ETagType::TT_Alphabetical
-	));
+		FAssetRegistryTag::ETagType::TT_Alphabetical));
 
 	FString AssetPath = LinkedAsset.GetLongPackageName();
 	if (LinkType != EShortcutAssetLinkType::Asset)
