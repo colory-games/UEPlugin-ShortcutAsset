@@ -23,8 +23,8 @@ void UShortcutAsset::GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) co
 
 	OutTags.Add(FAssetRegistryTag(TEXT("LinkType"),
 		LinkType == EShortcutAssetLinkType::Asset
-		? TEXT("Asset")
-		: LinkType == EShortcutAssetLinkType::DirectoryPath ? TEXT("Directory Path") : TEXT("Unknown"),
+			? TEXT("Asset")
+			: LinkType == EShortcutAssetLinkType::DirectoryPath ? TEXT("Directory Path") : TEXT("Unknown"),
 		FAssetRegistryTag::ETagType::TT_Alphabetical));
 
 	FString AssetPath = LinkedAsset.GetLongPackageName();
@@ -50,8 +50,8 @@ void UShortcutAsset::GetAssetRegistryTags(FAssetRegistryTagsContext Context) con
 
 	Context.AddTag(FAssetRegistryTag(TEXT("LinkType"),
 		LinkType == EShortcutAssetLinkType::Asset
-		? TEXT("Asset")
-		: LinkType == EShortcutAssetLinkType::DirectoryPath ? TEXT("Directory Path") : TEXT("Unknown"),
+			? TEXT("Asset")
+			: LinkType == EShortcutAssetLinkType::DirectoryPath ? TEXT("Directory Path") : TEXT("Unknown"),
 		FAssetRegistryTag::ETagType::TT_Alphabetical));
 
 	FString AssetPath = LinkedAsset.GetLongPackageName();
