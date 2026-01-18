@@ -13,6 +13,8 @@
 
 #define LOCTEXT_NAMESPACE "ShortcutAsset"
 
+#if UE_VERSION_NEWER_THAN_OR_EQUAL(5, 4, 0)
+
 void UShortcutAsset::GetAssetRegistryTags(FAssetRegistryTagsContext Context) const
 {
 	Super::GetAssetRegistryTags(Context);
@@ -37,5 +39,34 @@ void UShortcutAsset::GetAssetRegistryTags(FAssetRegistryTagsContext Context) con
 	}
 	Context.AddTag(FAssetRegistryTag(TEXT("LinkedDirectoryPath"), DirectoryPath, FAssetRegistryTag::ETagType::TT_Alphabetical));
 }
+
+#else
+
+void UShortcutAsset::GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) const
+{
+	Super::GetAssetRegistryTags(OutTags);
+
+	OutTags.Add(FAssetRegistryTag(TEXT("LinkType"),
+		LinkType == EShortcutAssetLinkType::Asset
+			? TEXT("Asset")
+			: LinkType == EShortcutAssetLinkType::DirectoryPath ? TEXT("Directory Path") : TEXT("Unknown"),
+		FAssetRegistryTag::ETagType::TT_Alphabetical));
+
+	FString AssetPath = LinkedAsset.GetLongPackageName();
+	if (LinkType != EShortcutAssetLinkType::Asset)
+	{
+		AssetPath = FString();
+	}
+	OutTags.Add(FAssetRegistryTag(TEXT("LinkedAsset"), AssetPath, FAssetRegistryTag::ETagType::TT_Alphabetical));
+
+	FString DirectoryPath = LinkedDirectoryPath.Path;
+	if (LinkType != EShortcutAssetLinkType::DirectoryPath)
+	{
+		DirectoryPath = FString();
+	}
+	OutTags.Add(FAssetRegistryTag(TEXT("LinkedDirectoryPath"), DirectoryPath, FAssetRegistryTag::ETagType::TT_Alphabetical));
+}
+
+#endif
 
 #undef LOCTEXT_NAMESPACE

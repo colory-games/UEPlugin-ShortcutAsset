@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "Misc/EngineVersionComparison.h"
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 
@@ -46,5 +47,9 @@ public:
 		meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::DirectoryPath"))
 	FDirectoryPath LinkedDirectoryPath;
 
+#if UE_VERSION_NEWER_THAN_OR_EQUAL(5, 4, 0)
 	virtual void GetAssetRegistryTags(FAssetRegistryTagsContext Context) const override;
+#else
+	virtual void GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) const override;
+#endif
 };
