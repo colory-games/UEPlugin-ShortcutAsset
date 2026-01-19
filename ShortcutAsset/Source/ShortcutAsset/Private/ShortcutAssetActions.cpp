@@ -94,8 +94,8 @@ void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects
 		);
 
 		MenuBuilder.AddMenuEntry(
-			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocationInNewWindow", "Open Asset Location in New Window"),
-			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocationInNewWindowTip", "Open directory where the linked asset is located (Open in new window)."),
+			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocationInNewContentBrowser", "Open Asset Location in New Content Browser"),
+			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocationInNewContentBrowserTip", "Open directory where the linked asset is located (Open in new Content Browser)."),
 			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
 			FUIAction(
 				FExecuteAction::CreateLambda([=]
@@ -138,8 +138,8 @@ void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects
 		);
 
 		MenuBuilder.AddMenuEntry(
-			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocationInNewWindow", "Open Directory Location in New Window"),
-			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocationInNewWindowTip", "Open directory where the linked directory is located (Open in new window)."),
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocationInNewContentBrowser", "Open Directory Location in New Content Browser"),
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocationInNewContentBrowserTip", "Open directory where the linked directory is located (Open in new Content Browser)."),
 			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
 			FUIAction(
 				FExecuteAction::CreateLambda([=]
@@ -159,8 +159,8 @@ void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects
 		);
 
 		MenuBuilder.AddMenuEntry(
-			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryInNewWindow", "Open Linked Directory in New Window"),
-			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryInNewWindowTip", "Open the liked directory in new window."),
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryInNewContentBrowser", "Open Linked Directory in New Content Browser"),
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryInNewContentBrowserTip", "Open the liked directory in new Content Browser."),
 			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
 			FUIAction(
 				FExecuteAction::CreateLambda([=]

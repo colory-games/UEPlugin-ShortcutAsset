@@ -83,10 +83,10 @@ Open directory where linked asset/directory is located.
 Open directory where linked asset/directory is located.
 New contents browser window will be opened.
 
-![Context Menu Access (Open Asset/Directory Location in New Window)](images/context_menu_open_asset_directory_location_in_new_window.png)
+![Context Menu Access (Open Asset/Directory Location in New Window)](images/context_menu_open_asset_directory_location_in_new_content_browser.png)
 
 ### Open Linked Directory in New Window
 
 If the [Link Type] is [Directory Path], open linked directory in new window.
 
-![Context Menu Access (Open Linked Directory in New Window)](images/context_menu_open_linked_directory_in_new_window.png)
+![Context Menu Access (Open Linked Directory in New Window)](images/context_menu_open_linked_directory_in_new_content_browser.png)
