@@ -69,6 +69,115 @@ void FShortcutAssetEditLinkActions::GetActions(const TArray<UObject*>& InObjects
 			})
 		)
 	);
+
+	if (ShortcutAsset->LinkType == EShortcutAssetLinkType::Asset)
+	{
+		MenuBuilder.AddMenuEntry(
+			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocation", "Open Asset Location"),
+			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocationTip", "Open directory where the linked asset is located."),
+			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+			FUIAction(
+				FExecuteAction::CreateLambda([=]
+				{
+					FString AssetPath = ShortcutAsset->LinkedAsset.GetAssetPathString();
+					FString LocationPath = FPaths::GetPath(AssetPath);
+					FContentBrowserModule& ContentBrowserModule =
+						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+
+					ContentBrowserModule.Get().SyncBrowserToFolders({ LocationPath }, false, false);
+				}),
+				FCanExecuteAction::CreateLambda([=]
+				{
+					return ShortcutAsset->LinkType == EShortcutAssetLinkType::Asset;
+				})
+			)
+		);
+
+		MenuBuilder.AddMenuEntry(
+			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocationInNewContentBrowser", "Open Asset Location in New Content Browser"),
+			LOCTEXT("ShortcutAsset_OpenLinkedAssetLocationInNewContentBrowserTip", "Open directory where the linked asset is located (Open in new Content Browser)."),
+			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+			FUIAction(
+				FExecuteAction::CreateLambda([=]
+				{
+					FString AssetPath = ShortcutAsset->LinkedAsset.GetAssetPathString();
+					FString LocationPath = FPaths::GetPath(AssetPath);
+					FContentBrowserModule& ContentBrowserModule =
+						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+
+					ContentBrowserModule.Get().SyncBrowserToFolders({ LocationPath }, false, false, FName(), true);
+				}),
+				FCanExecuteAction::CreateLambda([=]
+				{
+					return ShortcutAsset->LinkType == EShortcutAssetLinkType::Asset;
+				})
+			)
+		);
+	}
+	else if (ShortcutAsset->LinkType == EShortcutAssetLinkType::DirectoryPath)
+	{
+		MenuBuilder.AddMenuEntry(
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocation", "Open Directory Location"),
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocationTip", "Open directory where the linked asset is located."),
+			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+			FUIAction(
+				FExecuteAction::CreateLambda([=]
+				{
+					FString DirectoryPath = ShortcutAsset->LinkedDirectoryPath.Path;
+					FString LocationPath = FPaths::GetPath(DirectoryPath);
+					FContentBrowserModule& ContentBrowserModule =
+						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+
+					ContentBrowserModule.Get().SyncBrowserToFolders({ LocationPath }, false, false);
+				}),
+				FCanExecuteAction::CreateLambda([=]
+				{
+					return ShortcutAsset->LinkType == EShortcutAssetLinkType::DirectoryPath;
+				})
+			)
+		);
+
+		MenuBuilder.AddMenuEntry(
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocationInNewContentBrowser", "Open Directory Location in New Content Browser"),
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryLocationInNewContentBrowserTip", "Open directory where the linked directory is located (Open in new Content Browser)."),
+			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+			FUIAction(
+				FExecuteAction::CreateLambda([=]
+				{
+					FString DirectoryPath = ShortcutAsset->LinkedDirectoryPath.Path;
+					FString LocationPath = FPaths::GetPath(DirectoryPath);
+					FContentBrowserModule& ContentBrowserModule =
+						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+
+					ContentBrowserModule.Get().SyncBrowserToFolders({ LocationPath }, false, false, FName(), true);
+				}),
+				FCanExecuteAction::CreateLambda([=]
+				{
+					return ShortcutAsset->LinkType == EShortcutAssetLinkType::DirectoryPath;
+				})
+			)
+		);
+
+		MenuBuilder.AddMenuEntry(
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryInNewContentBrowser", "Open Linked Directory in New Content Browser"),
+			LOCTEXT("ShortcutAsset_OpenLinkedDirectoryInNewContentBrowserTip", "Open the liked directory in new Content Browser."),
+			FSlateIcon("ShortcutAssetStyle", "ClassIcon.ShortcutAsset"),
+			FUIAction(
+				FExecuteAction::CreateLambda([=]
+				{
+					FString DirectoryPath = ShortcutAsset->LinkedDirectoryPath.Path;
+					FContentBrowserModule& ContentBrowserModule =
+						FModuleManager::Get().LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+
+					ContentBrowserModule.Get().SyncBrowserToFolders({ DirectoryPath }, false, false, FName(), true);
+				}),
+				FCanExecuteAction::CreateLambda([=]
+				{
+					return ShortcutAsset->LinkType == EShortcutAssetLinkType::DirectoryPath;
+				})
+			)
+		);
+	}
 	// clang-format on
 }
 
