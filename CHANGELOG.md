@@ -1,6 +1,15 @@
 # Change Log
 
-## [Unreleased](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.6.0...main)
+## [Unreleased](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.7.0...main)
+
+## [Version 1.7.0](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.6.0...v1.7.0) - 2026.XX.XX
+
+### Updated Features
+
+* Support on Unreal Engine 5.8
+* Show shortcut asset related information in Contents Browser tooltip
+* Add context menu item related to opening directory actions
+* Add Context menu item to create a shortcut asset directly
 
 ## [Version 1.6.0](https://github.com/colory-games/UEPlugin-ShortcutAsset/compare/v1.5.0...v1.6.0) - 2025.12.25
 
