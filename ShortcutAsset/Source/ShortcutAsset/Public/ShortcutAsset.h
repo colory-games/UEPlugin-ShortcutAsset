@@ -47,9 +47,15 @@ public:
 		meta = (ContentDir, EditCondition = "LinkType == EShortcutAssetLinkType::DirectoryPath"))
 	FDirectoryPath LinkedDirectoryPath;
 
+	UTexture2D* CachedThumbnail = nullptr;
+
 #if UE_VERSION_OLDER_THAN(5, 4, 0)
 	virtual void GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) const override;
 #else
 	virtual void GetAssetRegistryTags(FAssetRegistryTagsContext Context) const override;
+#endif
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 };

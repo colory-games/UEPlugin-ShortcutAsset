@@ -25,6 +25,7 @@ public class ShortcutAsset : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[]{
 			"ApplicationCore",
 			"AssetRegistry",
+            "EditorScriptingUtilities",
 			"EditorStyle",
 			"EditorSubsystem",
 			"SlateCore",
@@ -33,7 +34,12 @@ public class ShortcutAsset : ModuleRules
 			"PropertyEditor",
 			"ContentBrowser",
 			"ContentBrowserData",
-		});
+
+			"UMG",
+            "RenderCore",
+            "RHI",
+            "SlateRHIRenderer",
+        });
 
 		// @remove-start FULL_VERSION=true
 		PublicDefinitions.Add("SA_FREE_VERSION");

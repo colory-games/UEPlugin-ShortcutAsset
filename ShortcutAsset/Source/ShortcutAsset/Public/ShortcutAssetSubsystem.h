@@ -31,4 +31,6 @@ public:
 	TMap<OBJECT_PTR(UObject), OBJECT_PTR(UShortcutAssetEditor)> OpenedEditorInstances;
 
 	TSharedPtr<IToolkitHost> ToolKitHostRef;
+
+	void RefreshThumbnail(UShortcutAsset* ShortcutAsset);
 };

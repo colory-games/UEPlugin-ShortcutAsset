@@ -21,6 +21,8 @@
 
 void FShortcutAssetModule::StartupModule()
 {
+	UThumbnailManager::Get().RegisterCustomRenderer(UShortcutAsset::StaticClass(), UShortcutAssetThumbnailRenderer::StaticClass());
+
 	RegisterActions();
 	RegisterStyles();
 	RegisterMenus();

@@ -9,6 +9,7 @@
 
 #include "ShortcutAsset.h"
 
+#include "ShortcutAssetSubsystem.h"
 #if !UE_VERSION_OLDER_THAN(5, 4, 0)
 #include "UObject/AssetRegistryTagsContext.h"
 #endif
@@ -67,6 +68,14 @@ void UShortcutAsset::GetAssetRegistryTags(FAssetRegistryTagsContext Context) con
 		DirectoryPath = FString();
 	}
 	Context.AddTag(FAssetRegistryTag(TEXT("LinkedDirectoryPath"), DirectoryPath, FAssetRegistryTag::ETagType::TT_Alphabetical));
+}
+
+#if WITH_EDITOR
+
+void UShortcutAsset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	UShortcutAssetSubsystem * Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
+	Subsystem->RefreshThumbnail(this);
 }
 
 #endif
