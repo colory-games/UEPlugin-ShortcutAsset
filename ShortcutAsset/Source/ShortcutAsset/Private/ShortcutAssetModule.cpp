@@ -18,6 +18,8 @@
 #include "ShortcutAssetUtils.h"
 #include "Styling/SlateStyleRegistry.h"
 #include "ToolMenus.h"
+#include "ShortcutAssetThumbnailRenderer.h"
+#include "ShortcutAssetSubsystem.h"
 
 void FShortcutAssetModule::StartupModule()
 {
@@ -26,10 +28,12 @@ void FShortcutAssetModule::StartupModule()
 	RegisterActions();
 	RegisterStyles();
 	RegisterMenus();
+	//RegisterHandle();		// If enabled, Unreal Engine will be crashed randomly.
 }
 
 void FShortcutAssetModule::ShutdownModule()
 {
+	//UnregisterHandle();
 	UnregisterMenus();
 	UnregisterStyles();
 	UnregisterActions();
@@ -254,6 +258,64 @@ void FShortcutAssetModule::UnregisterMenus()
 	RegisteredContentBrowserDirectoryPathExtenderHandles.Empty();
 
 	UToolMenus::Get()->UnregisterOwner(this);
+}
+
+void FShortcutAssetModule::RefreshAssetThumbnailsInDirectory(const FString& DirectoryPath)
+{
+	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+	IAssetRegistry& AssetRegistry = AssetRegistryModule.Get();
+
+	FString SearchPath = DirectoryPath;
+	if (SearchPath.StartsWith(TEXT("/All/")))
+	{
+		SearchPath = SearchPath.RightChop(4);
+	}
+
+	FARFilter Filter;
+	Filter.PackagePaths.Add(FName(*SearchPath));
+	Filter.bRecursivePaths = false;
+	Filter.bIncludeOnlyOnDiskAssets = false;
+#if UE_VERSION_NEWER_THAN(5, 1, 0)
+	Filter.ClassPaths.Add(UShortcutAsset::StaticClass()->GetClassPathName());
+#else
+	Filter.ClassNames.Add(UShortcutAsset::StaticClass()->GetFName());
+#endif
+
+	TArray<FAssetData> Assets;
+	AssetRegistry.GetAssets(Filter, Assets);
+	for (const FAssetData& AssetData : Assets)
+	{
+		UShortcutAsset* ShortcutAsset = Cast<UShortcutAsset>(AssetData.GetAsset());
+		if (ShortcutAsset == nullptr)
+		{
+			continue;
+		}
+
+		if (ShortcutAsset->CachedThumbnail != nullptr)
+		{
+			continue;
+		}
+
+		UShortcutAssetSubsystem* Subsystem = GEditor->GetEditorSubsystem<UShortcutAssetSubsystem>();
+		Subsystem->RefreshThumbnail(ShortcutAsset);
+	}
+}
+
+void FShortcutAssetModule::RegisterHandle()
+{
+	FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+
+	ContentBrowserDirectoryChangedHandle = ContentBrowserModule.GetOnAssetPathChanged().AddRaw(this, &FShortcutAssetModule::RefreshAssetThumbnailsInDirectory);
+}
+
+void FShortcutAssetModule::UnregisterHandle()
+{
+	if (FModuleManager::Get().IsModuleLoaded("ContentBrowser"))
+	{
+		FContentBrowserModule& ContentBrowserModule = FModuleManager::GetModuleChecked<FContentBrowserModule>("ContentBrowser");
+
+		ContentBrowserModule.GetOnAssetPathChanged().Remove(ContentBrowserDirectoryChangedHandle);
+	}
 }
 
 IMPLEMENT_MODULE(FShortcutAssetModule, ShortcutAsset);

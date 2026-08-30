@@ -25,6 +25,7 @@ private:
 	TArray<TSharedRef<FSlateStyleSet>> RegisteredSlateStyleSets;
 	TArray<FDelegateHandle> RegisteredContentBrowserAssetExtenderHandles;
 	TArray<FDelegateHandle> RegisteredContentBrowserDirectoryPathExtenderHandles;
+	FDelegateHandle ContentBrowserDirectoryChangedHandle;
 
 	void RegisterActions();
 	void UnregisterActions();
@@ -34,4 +35,9 @@ private:
 
 	void RegisterMenus();
 	void UnregisterMenus();
+
+	void RegisterHandle();
+	void UnregisterHandle();
+
+	void RefreshAssetThumbnailsInDirectory(const FString& DirectoryPath);
 };

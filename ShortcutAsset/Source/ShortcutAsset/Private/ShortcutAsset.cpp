@@ -80,4 +80,6 @@ void UShortcutAsset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChang
 
 #endif
 
+#endif
+
 #undef LOCTEXT_NAMESPACE
